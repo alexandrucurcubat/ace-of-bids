@@ -15,7 +15,7 @@ export class AppComponent {
     }, 1000);
   }
 
-  openAuthDialog() {
+  openAuthDialog(): void {
     const dialogRef = this.dialog.open(AuthDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
