@@ -2,13 +2,29 @@
   <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
 <mat-toolbar class="mat-elevation-z3">
-  <div>Ace<span id="title-of">of</span>Bids</div>
+  <div>Ace<span class="primary">of</span>Bids</div>
   <td-search-box
     backIcon="keyboard_arrow_right"
     clearIcon="clear"
     placeholder="Căutare vehicul"
     [showUnderline]="true"
   ></td-search-box>
+  <button
+    *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+    mat-icon-button
+    class="theme-btn"
+    (click)="changeTheme(ThemesEnum.DARK_THEME)"
+  >
+    <mat-icon>brightness_4</mat-icon>
+  </button>
+  <button
+    *ngIf="themeClass === ThemesEnum.DARK_THEME"
+    mat-icon-button
+    class="theme-btn"
+    (click)="changeTheme(ThemesEnum.LIGHT_THEME)"
+  >
+    <mat-icon class="accent">brightness_5</mat-icon>
+  </button>
   <button mat-flat-button color="primary" (click)="openAuthDialog()">
     Autentificare
   </button>
