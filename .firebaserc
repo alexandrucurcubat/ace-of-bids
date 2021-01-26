@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "ace-of-bids"
+  },
+  "targets": {
+    "ace-of-bids": {
+      "hosting": {
+        "prod": [
+          "ace-of-bids"
+        ],
+        "dev": [
+          "ace-of-bids-dev"
+        ]
+      }
+    }
+  }
+}

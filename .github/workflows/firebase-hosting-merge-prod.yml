@@ -1,0 +1,27 @@
+name: Deploy to Firebase Hosting on merge
+"on":
+  push:
+    branches:
+      - master
+jobs:
+  build_and_deploy_prod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        run: npm run test-headless
+      - name: Build
+        run: npm run build:prod
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_ACE_OF_BIDS }}"
+          channelId: live
+          projectId: ace-of-bids
+          target: prod
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
