@@ -13,7 +13,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Test
-        run: npm run test-headless
+        run: npm run test:headless
       - name: Build
         run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
