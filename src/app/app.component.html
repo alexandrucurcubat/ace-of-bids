@@ -3,7 +3,28 @@
 <mat-drawer-container>
   <mat-drawer #drawer mode="over">
     <div class="flex flex-column">
-      <button mat-button [matMenuTriggerFor]="menu">Licitații</button>
+      <mat-selection-list #shoes [multiple]="false">
+        <mat-list-option
+          class="primary"
+          (click)="drawer.close()"
+          (click)="onOpenAuthDialog()"
+        >
+          <mat-icon mat-list-icon>account_circle</mat-icon>
+          Conectează-te
+        </mat-list-option>
+        <mat-list-option [matMenuTriggerFor]="menu">
+          <mat-icon mat-list-icon>monetization_on</mat-icon>
+          Licitații
+        </mat-list-option>
+        <mat-list-option (click)="drawer.close()">
+          <mat-icon mat-list-icon>check_circle</mat-icon>
+          Cum licităm
+        </mat-list-option>
+        <mat-list-option (click)="drawer.close()">
+          <mat-icon mat-list-icon>info</mat-icon>
+          Despre noi
+        </mat-list-option>
+      </mat-selection-list>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="drawer.close()">
           <mat-icon>sensors</mat-icon>
@@ -14,31 +35,25 @@
           <span>Închise</span>
         </button>
       </mat-menu>
-      <button mat-button (click)="drawer.close()">Cum licităm</button>
-      <button mat-button (click)="drawer.close()">Despre noi</button>
-      <button
-        mat-button
-        color="primary"
-        (click)="drawer.close()"
-        (click)="onOpenAuthDialog()"
-      >
-        Conectează-te
-      </button>
     </div>
   </mat-drawer>
   <main>
     <div class="flex flex-space-between">
-      <button id="drawer-btn" mat-icon-button (click)="drawer.toggle()">
+      <button
+        id="drawer-btn"
+        mat-mini-fab
+        color="primary"
+        (click)="drawer.toggle()"
+      >
         <mat-icon>menu</mat-icon>
       </button>
       <button mat-button *ngIf="!env.production">
-        <mat-icon color="primary">architecture</mat-icon>
+        <mat-icon>architecture</mat-icon>
       </button>
       <div>
         <button
           *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
           mat-icon-button
-          class="theme-btn"
           (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
         >
           <mat-icon>brightness_4</mat-icon>
@@ -46,7 +61,6 @@
         <button
           *ngIf="themeClass === ThemesEnum.DARK_THEME"
           mat-icon-button
-          class="theme-btn"
           (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
         >
           <mat-icon class="accent">brightness_5</mat-icon>

@@ -8,12 +8,12 @@ mat-drawer-container {
   padding-top: 64px;
 
   mat-drawer {
-    padding-top: 80px;
+    padding-top: 55px;
     button {
       margin: 5px;
     }
     @media screen and (max-width: 599px) {
-      padding-top: 72px;
+      padding-top: 45px;
     }
   }
 
