@@ -1,26 +1,45 @@
 @import "~@angular/material/theming";
 @include mat-core();
 
-$ace-of-bids-primary: mat-palette($mat-cyan);
-$ace-of-bids-accent: mat-palette($mat-orange);
-$ace-of-bids-warn: mat-palette($mat-red);
-
-$ace-of-bids-theme: mat-light-theme(
+$light-primary: mat-palette($mat-cyan);
+$light-accent: mat-palette($mat-orange);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme(
   (
     color: (
-      primary: $ace-of-bids-primary,
-      accent: $ace-of-bids-accent,
-      warn: $ace-of-bids-warn,
+      primary: $light-primary,
+      accent: $light-accent,
+      warn: $light-warn,
     ),
   )
 );
 
-@include angular-material-theme($ace-of-bids-theme);
+$dark-primary: mat-palette($mat-cyan);
+$dark-accent: mat-palette($mat-orange);
+$dark-warn: mat-palette($mat-red);
+$dark-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
+  )
+);
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+}
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+}
 
 :root {
   --primary: #00bcd4;
   --accent: #ff9800;
   --warn: #f44336;
+  --success: #4caf50;
 }
 
 html,
@@ -30,4 +49,65 @@ body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.warn {
+  color: var(--warn);
+}
+
+.success {
+  color: var(--success);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.bg-accent {
+  background-color: var(--accent);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center {
+  justify-content: center;
+}
+
+.flex-start {
+  justify-content: flex-start;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.flex-space-around {
+  justify-content: space-around;
+}
+
+.ml-auto {
+  margin-left: auto;
 }

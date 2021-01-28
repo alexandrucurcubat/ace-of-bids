@@ -1,1 +1,116 @@
-<p>auth-dialog works!</p>
+<form
+  class="flex flex-column"
+  *ngIf="currentForm === FormType.LOGIN"
+  [formGroup]="loginForm"
+  (ngSubmit)="onLogin()"
+>
+  <h2>Conectare</h2>
+  <p>
+    Încă nu ai un cont?
+    <a href="" (click)="onRegistrationMode($event)">Înregistrează-te aici</a>
+  </p>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="loginEmail" />
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error *ngIf="loginEmail?.errors?.required">
+      Lipsește email-ul
+    </mat-error>
+    <mat-error *ngIf="loginEmail?.errors?.email">Email invalid</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Parolă</mat-label>
+    <input type="password" matInput formControlName="loginPassword" />
+    <mat-icon matSuffix>lock</mat-icon>
+    <mat-error *ngIf="loginPassword?.errors?.required">
+      Lipsește parola
+    </mat-error>
+  </mat-form-field>
+  <button id="btn-sign-in" mat-flat-button color="primary">Conectare</button>
+  <a href="" (click)="onPasswordResetMode($event)">Ai uitat parola?</a>
+</form>
+<form
+  class="flex flex-column"
+  *ngIf="currentForm === FormType.REGISTRATION"
+  [formGroup]="registrationForm"
+  (ngSubmit)="onRegistration()"
+>
+  <h2>Înregistrare cont</h2>
+  <p>
+    Deja ai un cont?
+    <a href="" (click)="onLoginMode($event)">Conectează-te</a>
+  </p>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="registrationEmail" />
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error *ngIf="registrationEmail?.errors?.required">
+      Lipsește email-ul
+    </mat-error>
+    <mat-error *ngIf="registrationEmail?.errors?.email"
+      >Email invalid</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nume utilizator</mat-label>
+    <input type="text" matInput formControlName="registrationUsername" />
+    <mat-icon matSuffix>account_circle</mat-icon>
+    <mat-error *ngIf="registrationUsername?.errors?.required">
+      Lipsește numele de utilizator
+    </mat-error>
+    <mat-error *ngIf="registrationUsername?.errors?.minlength">
+      Numele de uitlizator trebuie să aibă minim 3 caractere
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Parolă</mat-label>
+    <input type="password" matInput formControlName="registrationPassword" />
+    <mat-icon matSuffix>lock</mat-icon>
+    <mat-error *ngIf="registrationPassword?.errors?.required">
+      Lipsește parola
+    </mat-error>
+    <mat-error *ngIf="registrationPassword?.errors?.minlength">
+      Parola trebuie să aibă minim 6 caractere
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Confirmare Parolă</mat-label>
+    <input
+      type="password"
+      matInput
+      formControlName="registrationPasswordConfirmation"
+    />
+    <mat-icon matSuffix>lock</mat-icon>
+    <mat-error *ngIf="registrationPasswordConfirmation?.errors?.required">
+      Lipsește parola de confirmare
+    </mat-error>
+    <mat-error *ngIf="registrationPasswordConfirmation?.errors?.notMatching">
+      Parola nu coincide
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button color="primary">Înregistrare</button>
+</form>
+<form
+  class="flex flex-column"
+  *ngIf="currentForm === FormType.PASSWORD_RESET"
+  [formGroup]="passwordResetForm"
+  (ngSubmit)="onPasswordReset()"
+>
+  <h2>Resetare parolă</h2>
+  <p>
+    Cunoști parola?
+    <a href="" (click)="onLoginMode($event)">Conectează-te</a>
+  </p>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="passwordResetEmail" />
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error *ngIf="passwordResetEmail?.errors?.required">
+      Lipsește email-ul
+    </mat-error>
+    <mat-error *ngIf="passwordResetEmail?.errors?.email">
+      Email invalid
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button color="primary">Resetare parolă</button>
+</form>
