@@ -1,17 +1,33 @@
-mat-toolbar {
-  font-weight: bold;
-}
-
 mat-progress-bar {
   position: absolute;
+  z-index: 3;
 }
 
-td-search-box {
-  flex: 1;
-  font-size: 80%;
-  margin-left: 10px;
-}
+mat-drawer-container {
+  min-height: 100vh;
+  padding-top: 64px;
 
-.theme-btn {
-  margin: 0 10px;
+  mat-drawer {
+    padding-top: 80px;
+    button {
+      margin: 5px;
+    }
+    @media screen and (max-width: 599px) {
+      padding-top: 72px;
+    }
+  }
+
+  main {
+    padding: 16px;
+  }
+
+  @media screen and (min-width: 960px) {
+    #drawer-btn {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    padding-top: 56px;
+  }
 }

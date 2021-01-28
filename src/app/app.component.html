@@ -1,31 +1,57 @@
-<div id="progress-bar" *ngIf="loading">
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</div>
-<mat-toolbar class="mat-elevation-z3">
-  <div>Ace<span class="primary">of</span>Bids</div>
-  <td-search-box
-    backIcon="keyboard_arrow_right"
-    clearIcon="clear"
-    placeholder="Căutare vehicul"
-    [showUnderline]="true"
-  ></td-search-box>
-  <button
-    *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
-    mat-icon-button
-    class="theme-btn"
-    (click)="changeTheme(ThemesEnum.DARK_THEME)"
-  >
-    <mat-icon>brightness_4</mat-icon>
-  </button>
-  <button
-    *ngIf="themeClass === ThemesEnum.DARK_THEME"
-    mat-icon-button
-    class="theme-btn"
-    (click)="changeTheme(ThemesEnum.LIGHT_THEME)"
-  >
-    <mat-icon class="accent">brightness_5</mat-icon>
-  </button>
-  <button mat-flat-button color="primary" (click)="openAuthDialog()">
-    Autentificare
-  </button>
-</mat-toolbar>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<ace-header></ace-header>
+<mat-drawer-container>
+  <mat-drawer #drawer mode="over">
+    <div class="flex flex-column">
+      <button mat-button [matMenuTriggerFor]="menu">Licitații</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="drawer.close()">
+          <mat-icon>sensors</mat-icon>
+          <span class="success">Live</span>
+        </button>
+        <button mat-menu-item (click)="drawer.close()">
+          <mat-icon>gavel</mat-icon>
+          <span>Închise</span>
+        </button>
+      </mat-menu>
+      <button mat-button (click)="drawer.close()">Cum licităm</button>
+      <button mat-button (click)="drawer.close()">Despre noi</button>
+      <button
+        mat-button
+        color="primary"
+        (click)="drawer.close()"
+        (click)="onOpenAuthDialog()"
+      >
+        Conectează-te
+      </button>
+    </div>
+  </mat-drawer>
+  <main>
+    <div class="flex flex-space-between">
+      <button id="drawer-btn" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <button mat-button *ngIf="!env.production">
+        <mat-icon color="primary">architecture</mat-icon>
+      </button>
+      <div>
+        <button
+          *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+          mat-icon-button
+          class="theme-btn"
+          (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+        >
+          <mat-icon>brightness_4</mat-icon>
+        </button>
+        <button
+          *ngIf="themeClass === ThemesEnum.DARK_THEME"
+          mat-icon-button
+          class="theme-btn"
+          (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+        >
+          <mat-icon class="accent">brightness_5</mat-icon>
+        </button>
+      </div>
+    </div>
+  </main>
+</mat-drawer-container>

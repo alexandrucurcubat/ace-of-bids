@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 
 import { AuthDialogComponent } from './auth-dialog.component';
 
@@ -8,9 +9,9 @@ describe('AuthDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuthDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthDialogComponent],
+      providers: [FormBuilder],
+    }).compileComponents();
   });
 
   beforeEach(() => {

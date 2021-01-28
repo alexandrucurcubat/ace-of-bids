@@ -17,8 +17,11 @@ export class ThemingService {
     const darkModeOn =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const storedTheme = localStorage.getItem('theme');
 
-    if (darkModeOn) {
+    if (storedTheme) {
+      this.theme.next(storedTheme as Themes);
+    } else if (darkModeOn) {
       this.theme.next(Themes.DARK_THEME);
     }
 
@@ -29,5 +32,10 @@ export class ThemingService {
         this.theme.next(turnOn ? Themes.DARK_THEME : Themes.LIGHT_THEME);
         this.ref.tick();
       });
+  }
+
+  changeTheme(theme: Themes): void {
+    this.theme.next(theme);
+    localStorage.setItem('theme', theme);
   }
 }

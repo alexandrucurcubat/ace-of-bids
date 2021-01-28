@@ -1,10 +1,12 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
 import { Themes, ThemingService } from './shared/ui/theming.service';
+import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
+import { environment } from 'src/environments/environment';
+import { Environment } from './shared/models/environment';
 
 @Component({
   selector: 'ace-root',
@@ -12,11 +14,11 @@ import { Themes, ThemingService } from './shared/ui/theming.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  env: Environment;
   @HostBinding('class')
   themeClass: Themes = Themes.LIGHT_THEME;
   ThemesEnum = Themes;
   themingSubscription: Subscription = new Subscription();
-
   loading = true;
 
   constructor(
@@ -24,9 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer
   ) {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -36,17 +36,17 @@ export class AppComponent implements OnInit, OnDestroy {
         this.applyThemeOnOverlays();
       }
     );
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000);
   }
 
-  changeTheme(theme: Themes): void {
-    this.themingService.theme.next(theme);
+  onOpenAuthDialog(): void {
+    this.dialog.open(AuthDialogComponent);
   }
 
-  openAuthDialog(): void {
-    const dialogRef = this.dialog.open(AuthDialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+  onChangeTheme(theme: Themes): void {
+    this.themingService.changeTheme(theme);
   }
 
   private applyThemeOnOverlays(): void {

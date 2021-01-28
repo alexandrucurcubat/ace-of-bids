@@ -1,0 +1,25 @@
+<mat-toolbar class="mat-elevation-z3">
+  <div>Ace<span class="primary">of</span>Bids</div>
+  <td-search-box
+    backIcon="keyboard_arrow_right"
+    clearIcon="clear"
+    placeholder="Căutare mașină"
+    [showUnderline]="true"
+  ></td-search-box>
+  <button mat-button [matMenuTriggerFor]="menu">Licitații</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>sensors</mat-icon>
+      <span class="success">Live</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>gavel</mat-icon>
+      <span>Închise</span>
+    </button>
+  </mat-menu>
+  <button mat-button>Cum licităm</button>
+  <button mat-button>Despre noi</button>
+  <button mat-button color="primary" (click)="onOpenAuthDialog()">
+    Conectează-te
+  </button>
+</mat-toolbar>
