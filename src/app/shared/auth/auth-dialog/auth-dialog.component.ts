@@ -81,7 +81,7 @@ export class AuthDialogComponent {
       });
     }
     if (this.registrationForm.valid) {
-      this, this.authService.register(this.registrationForm.value);
+      this.authService.register(this.registrationForm.value);
     }
   }
 
