@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from '../../shared.module';
-import { MaterialModule } from '../material/material.module';
 
+import { MaterialModule } from '../material/material.module';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -13,7 +12,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [SharedModule, BrowserAnimationsModule],
+      imports: [MaterialModule, BrowserAnimationsModule],
       providers: [MatDialog],
     }).compileComponents();
   });

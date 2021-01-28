@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthDialogComponent } from 'src/app/shared/auth/auth-dialog/auth-dialog.component';
@@ -8,10 +8,8 @@ import { AuthDialogComponent } from 'src/app/shared/auth/auth-dialog/auth-dialog
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   constructor(public dialog: MatDialog) {}
-
-  ngOnInit(): void {}
 
   onOpenAuthDialog(): void {
     this.dialog.open(AuthDialogComponent);

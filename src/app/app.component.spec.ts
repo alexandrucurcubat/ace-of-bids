@@ -4,13 +4,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
+import { MaterialModule } from './shared/ui/material/material.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [RouterTestingModule, SharedModule, BrowserAnimationsModule],
+      imports: [RouterTestingModule, MaterialModule, BrowserAnimationsModule],
       providers: [MatDialog],
     }).compileComponents();
   });
