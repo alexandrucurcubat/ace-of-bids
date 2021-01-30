@@ -2,11 +2,13 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { TdDialogService } from '@covalent/core/dialogs';
 
 import { Themes, ThemingService } from './shared/ui/theming.service';
 import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
 import { environment } from 'src/environments/environment';
 import { Environment } from './shared/models/environment';
+import { version } from '../../package.json';
 
 @Component({
   selector: 'ace-root',
@@ -24,7 +26,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     private themingService: ThemingService,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
+    private dialogService: TdDialogService
   ) {
     this.env = environment;
   }
@@ -47,6 +50,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onChangeTheme(theme: Themes): void {
     this.themingService.changeTheme(theme);
+  }
+
+  onDEV(): void {
+    this.dialogService.openAlert({
+      message: `Versiune aplicație: ${version}`,
+      title: 'DEV',
+      closeButton: 'OK',
+    });
   }
 
   private applyThemeOnOverlays(): void {

@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-
-import { AuthDialogComponent } from 'src/app/shared/auth/auth-dialog/auth-dialog.component';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'ace-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  constructor(public dialog: MatDialog) {}
+  @Output()
+  openAuthDialog = new EventEmitter();
 
   onOpenAuthDialog(): void {
-    this.dialog.open(AuthDialogComponent);
+    this.openAuthDialog.emit();
   }
 }

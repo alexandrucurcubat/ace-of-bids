@@ -4,7 +4,7 @@ import {
   LoginData,
   RegistrationData,
   PasswordResetData,
-} from './models/auth-form-data';
+} from '../models/auth-form-data';
 
 @Injectable({
   providedIn: 'root',

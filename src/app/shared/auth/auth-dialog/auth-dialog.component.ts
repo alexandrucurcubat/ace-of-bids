@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { AuthFormType } from '../models/auth-form-type';
 
 @Component({
@@ -94,15 +94,21 @@ export class AuthDialogComponent {
   onRegistrationMode(event: Event): void {
     event.preventDefault();
     this.currentForm = AuthFormType.REGISTRATION;
+    this.loginForm.reset();
+    this.passwordResetForm.reset();
   }
 
   onLoginMode(event: Event): void {
     event.preventDefault();
     this.currentForm = AuthFormType.LOGIN;
+    this.registrationForm.reset();
+    this.passwordResetForm.reset();
   }
 
   onPasswordResetMode(event: Event): void {
     event.preventDefault();
     this.currentForm = AuthFormType.PASSWORD_RESET;
+    this.loginForm.reset();
+    this.registrationForm.reset();
   }
 }

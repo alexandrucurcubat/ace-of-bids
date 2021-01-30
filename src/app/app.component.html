@@ -1,14 +1,10 @@
 <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-<ace-header></ace-header>
+<ace-header (openAuthDialog)="onOpenAuthDialog()"></ace-header>
 <mat-drawer-container>
   <mat-drawer #drawer mode="over">
     <div class="flex flex-column">
       <mat-selection-list #shoes [multiple]="false">
-        <mat-list-option
-          class="primary"
-          (click)="drawer.close()"
-          (click)="onOpenAuthDialog()"
-        >
+        <mat-list-option (click)="drawer.close()" (click)="onOpenAuthDialog()">
           <mat-icon mat-list-icon>account_circle</mat-icon>
           Conectează-te
         </mat-list-option>
@@ -39,7 +35,11 @@
   </mat-drawer>
   <main>
     <div class="flex flex-end">
-      <button mat-button *ngIf="!env.production">
+      <button
+        mat-button
+        *ngIf="!env.production"
+        (click)="onDEV()"
+      >
         <mat-icon>architecture</mat-icon>
       </button>
       <div>
@@ -59,12 +59,7 @@
         </button>
       </div>
     </div>
-    <button
-      id="drawer-btn"
-      mat-fab
-      color="primary"
-      (click)="drawer.toggle()"
-    >
+    <button id="drawer-btn" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam aut
