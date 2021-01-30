@@ -1,4 +1,7 @@
-<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar
+  *ngIf="isLoading$ | async"
+  mode="indeterminate"
+></mat-progress-bar>
 <ace-header (openAuthDialog)="onOpenAuthDialog()"></ace-header>
 <mat-drawer-container>
   <mat-drawer #drawer mode="over">
@@ -35,11 +38,7 @@
   </mat-drawer>
   <main>
     <div class="flex flex-end">
-      <button
-        mat-button
-        *ngIf="!env.production"
-        (click)="onDEV()"
-      >
+      <button mat-button *ngIf="!env.production" (click)="onDEV()">
         <mat-icon>architecture</mat-icon>
       </button>
       <div>
@@ -62,6 +61,7 @@
     <button id="drawer-btn" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
+    <h1>{{ loggedUser$ | async | json }}</h1>
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam aut
     obcaecati quo nobis dicta at nisi itaque reiciendis debitis sint, enim quae
     impedit! Hic mollitia repellendus quia rem veritatis vitae? Harum officia

@@ -19,7 +19,20 @@
   </mat-menu>
   <button mat-button>Cum licităm</button>
   <button mat-button>Despre noi</button>
-  <button mat-button color="primary" (click)="onOpenAuthDialog()">
+  <button
+    mat-button
+    color="primary"
+    (click)="onOpenAuthDialog()"
+    *ngIf="(loggedUser$ | async) === null"
+  >
     Conectează-te
+  </button>
+  <button
+    mat-button
+    color="accent"
+    (click)="onLogout()"
+    *ngIf="loggedUser$ | async"
+  >
+    Deconectare
   </button>
 </mat-toolbar>

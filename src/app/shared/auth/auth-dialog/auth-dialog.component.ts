@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { switchMap } from 'rxjs/operators';
+import { SubSink } from 'subsink';
 
 import { AuthService } from '../services/auth.service';
 import { AuthFormType } from '../models/auth-form-type';
@@ -14,14 +17,19 @@ import { AuthFormType } from '../models/auth-form-type';
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss'],
 })
-export class AuthDialogComponent {
+export class AuthDialogComponent implements OnDestroy {
+  private subs = new SubSink();
   FormType = AuthFormType;
   currentForm = AuthFormType.LOGIN;
   loginForm: FormGroup;
   registrationForm: FormGroup;
   passwordResetForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private dialogRef: MatDialogRef<AuthDialogComponent>
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -67,7 +75,9 @@ export class AuthDialogComponent {
 
   onLogin(): void {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value);
+      this.subs.sink = this.authService
+        .login(this.loginForm.value)
+        .subscribe(() => this.dialogRef.close());
     }
   }
 
@@ -81,7 +91,14 @@ export class AuthDialogComponent {
       });
     }
     if (this.registrationForm.valid) {
-      this.authService.register(this.registrationForm.value);
+      const {
+        passwordConfirmation,
+        ...registrationData
+      } = this.registrationForm.value;
+      this.subs.sink = this.authService
+        .register(registrationData)
+        .pipe(switchMap(() => this.authService.login(registrationData)))
+        .subscribe(() => this.dialogRef.close());
     }
   }
 
@@ -110,5 +127,9 @@ export class AuthDialogComponent {
     this.currentForm = AuthFormType.PASSWORD_RESET;
     this.loginForm.reset();
     this.registrationForm.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 }

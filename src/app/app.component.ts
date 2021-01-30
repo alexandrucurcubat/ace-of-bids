@@ -1,14 +1,17 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TdDialogService } from '@covalent/core/dialogs';
 
-import { Themes, ThemingService } from './shared/ui/theming.service';
+import { Themes, ThemingService } from './shared/ui/theming/theming.service';
 import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
 import { environment } from 'src/environments/environment';
 import { Environment } from './shared/models/environment';
 import { version } from '../../package.json';
+import { AuthService } from './shared/auth/services/auth.service';
+import { User } from './shared/models/user';
+import { LoadingService } from './core/loading/loading.service';
 
 @Component({
   selector: 'ace-root',
@@ -21,13 +24,16 @@ export class AppComponent implements OnInit, OnDestroy {
   themeClass: Themes = Themes.LIGHT_THEME;
   ThemesEnum = Themes;
   themingSubscription: Subscription = new Subscription();
-  loading = true;
+  isLoading$!: Observable<boolean>;
+  loggedUser$!: Observable<User | null>;
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer,
-    private dialogService: TdDialogService
+    private dialogService: TdDialogService,
+    private authService: AuthService,
+    private loadingService: LoadingService
   ) {
     this.env = environment;
   }
@@ -39,9 +45,9 @@ export class AppComponent implements OnInit, OnDestroy {
         this.applyThemeOnOverlays();
       }
     );
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+    this.isLoading$ = this.loadingService.isLoading$;
+    this.loggedUser$ = this.authService.loggedUser$;
+    this.authService.autoLogin();
   }
 
   onOpenAuthDialog(): void {
