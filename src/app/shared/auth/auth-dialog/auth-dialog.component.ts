@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -6,29 +6,33 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 import { AuthService } from '../services/auth.service';
 import { AuthFormType } from '../models/auth-form-type';
+import { LoadingService } from 'src/app/core/loading/loading.service';
 
 @Component({
   selector: 'ace-auth-dialog',
   templateUrl: './auth-dialog.component.html',
   styleUrls: ['./auth-dialog.component.scss'],
 })
-export class AuthDialogComponent implements OnDestroy {
+export class AuthDialogComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   FormType = AuthFormType;
   currentForm = AuthFormType.LOGIN;
   loginForm: FormGroup;
   registrationForm: FormGroup;
   passwordResetForm: FormGroup;
+  isLoading$!: Observable<boolean>;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private dialogRef: MatDialogRef<AuthDialogComponent>
+    private dialogRef: MatDialogRef<AuthDialogComponent>,
+    private loadingService: LoadingService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -71,6 +75,10 @@ export class AuthDialogComponent implements OnDestroy {
 
   get passwordResetEmail(): AbstractControl | null {
     return this.passwordResetForm.get('email');
+  }
+
+  ngOnInit(): void {
+    this.isLoading$ = this.loadingService.isLoading$;
   }
 
   onLogin(): void {

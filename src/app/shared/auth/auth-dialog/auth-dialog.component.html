@@ -26,7 +26,14 @@
       Lipsește parola
     </mat-error>
   </mat-form-field>
-  <button id="btn-sign-in" mat-flat-button color="primary">Conectare</button>
+  <button
+    id="btn-sign-in"
+    mat-flat-button
+    color="primary"
+    [disabled]="isLoading$ | async"
+  >
+    Conectare
+  </button>
   <a href="" (click)="onPasswordResetMode($event)">Ai uitat parola?</a>
 </form>
 <form
@@ -84,7 +91,9 @@
       Parola nu coincide
     </mat-error>
   </mat-form-field>
-  <button mat-flat-button color="primary">Înregistrare</button>
+  <button mat-flat-button color="primary" [disabled]="isLoading$ | async">
+    Înregistrare
+  </button>
 </form>
 <form
   class="flex flex-column"
@@ -108,5 +117,7 @@
       Email invalid
     </mat-error>
   </mat-form-field>
-  <button mat-flat-button color="primary">Resetare parolă</button>
+  <button mat-flat-button color="primary" [disabled]="isLoading$ | async">
+    Resetare parolă
+  </button>
 </form>

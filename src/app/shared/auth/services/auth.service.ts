@@ -29,7 +29,7 @@ export class AuthService {
       .pipe(
         tap((authResponse: AuthResponse) => {
           console.log(authResponse);
-          const token = authResponse.access_token;
+          const token = authResponse.token;
           localStorage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, token);
           this.loggedUserSubject.next(this.jwtHelper.decodeToken(token).user);
         }),
