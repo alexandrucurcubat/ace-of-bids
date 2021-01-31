@@ -8,9 +8,7 @@ export enum Themes {
   DARK_THEME = 'dark-theme',
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ThemingService {
   themes = [Themes.DARK_THEME, Themes.LIGHT_THEME];
   theme = new BehaviorSubject(Themes.LIGHT_THEME);
