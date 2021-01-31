@@ -4,7 +4,10 @@ form {
     margin: 15px 0;
   }
   min-width: 290px;
-  @media screen and (max-width: 599px) {
+  @media screen and (max-width: 399px) {
+    min-width: 250px;
+  }
+  @media screen and (max-width: 359px) {
     min-width: 210px;
   }
 }
