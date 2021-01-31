@@ -20,8 +20,8 @@ export class HeaderComponent {
   openAuthDialog = new EventEmitter();
   loggedUser$: Observable<User | null>;
 
-  constructor(private authaService: AuthService) {
-    this.loggedUser$ = this.authaService.loggedUser$;
+  constructor(private authService: AuthService) {
+    this.loggedUser$ = this.authService.loggedUser$;
   }
 
   onOpenAuthDialog(): void {
@@ -29,6 +29,6 @@ export class HeaderComponent {
   }
 
   onLogout(): void {
-    this.authaService.logout();
+    this.authService.logout();
   }
 }

@@ -54,7 +54,7 @@
   <mat-form-field>
     <mat-label>Nume utilizator</mat-label>
     <input type="text" matInput formControlName="username" />
-    <mat-icon matSuffix>account_circle</mat-icon>
+    <mat-icon matSuffix>person</mat-icon>
     <mat-error *ngIf="registrationUsername?.errors?.required">
       Lipsește numele de utilizator
     </mat-error>
@@ -76,7 +76,7 @@
   <mat-form-field>
     <mat-label>Confirmare Parolă</mat-label>
     <input type="password" matInput formControlName="passwordConfirmation" />
-    <mat-icon matSuffix>lock</mat-icon>
+    <mat-icon matSuffix>verified_user</mat-icon>
     <mat-error *ngIf="registrationPasswordConfirmation?.errors?.required">
       Lipsește parola de confirmare
     </mat-error>

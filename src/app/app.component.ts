@@ -4,7 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { TdDialogService } from '@covalent/core/dialogs';
 
-import { Themes, ThemingService } from './shared/ui/theming/theming.service';
+import {
+  Themes,
+  ThemingService,
+} from './shared/ui/theming/services/theming.service';
 import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
 import { environment } from 'src/environments/environment';
 import { Environment } from './shared/models/environment';
@@ -19,13 +22,13 @@ import { LoadingService } from './core/loading/loading.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  env: Environment;
   @HostBinding('class')
   themeClass: Themes = Themes.LIGHT_THEME;
   ThemesEnum = Themes;
-  themingSubscription: Subscription = new Subscription();
+  themingSubscription = new Subscription();
   isLoading$!: Observable<boolean>;
   loggedUser$!: Observable<User | null>;
+  environment!: Environment;
 
   constructor(
     private dialog: MatDialog,
@@ -34,9 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private dialogService: TdDialogService,
     private authService: AuthService,
     private loadingService: LoadingService
-  ) {
-    this.env = environment;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.themingSubscription = this.themingService.theme.subscribe(
@@ -48,14 +49,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.loadingService.isLoading$;
     this.loggedUser$ = this.authService.loggedUser$;
     this.authService.autoLogin();
+    this.environment = environment;
   }
 
   onOpenAuthDialog(): void {
-    this.dialog.open(AuthDialogComponent);
+    const authDialog = this.dialog.open(AuthDialogComponent);
+    authDialog.updatePosition({ top: '100px' });
   }
 
   onChangeTheme(theme: Themes): void {
     this.themingService.changeTheme(theme);
+  }
+
+  onLogout(): void {
+    this.authService.logout();
   }
 
   onDEV(): void {

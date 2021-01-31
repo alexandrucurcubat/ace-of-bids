@@ -3,4 +3,8 @@ form {
   button {
     margin: 15px 0;
   }
+  min-width: 290px;
+  @media screen and (max-width: 599px) {
+    min-width: 210px;
+  }
 }

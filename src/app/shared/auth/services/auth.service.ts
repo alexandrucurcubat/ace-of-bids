@@ -24,7 +24,6 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   login(loginData: LoginData): Observable<AuthResponse> {
-    console.log('login', loginData);
     return this.http
       .post<AuthResponse>(`${environment.apiUrl}/users/login`, loginData)
       .pipe(
@@ -49,13 +48,11 @@ export class AuthService {
   }
 
   logout(): void {
-    console.log('logged out');
     localStorage.removeItem(LOCAL_STORAGE.ACCESS_TOKEN);
     this.loggedUserSubject.next(null);
   }
 
   register(registrationData: RegistrationData): Observable<User> {
-    console.log('registration', registrationData);
     return this.http
       .post<User>(`${environment.apiUrl}/users/register`, registrationData)
       .pipe(

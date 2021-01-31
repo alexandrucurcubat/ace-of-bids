@@ -9,7 +9,6 @@ mat-drawer-container {
 
   mat-drawer {
     padding-top: 60px;
-    // position: fixed;
     button {
       margin: 5px;
     }
@@ -18,7 +17,7 @@ mat-drawer-container {
     }
   }
 
-  main {
+  mat-drawer-content {
     padding: 16px;
   }
 

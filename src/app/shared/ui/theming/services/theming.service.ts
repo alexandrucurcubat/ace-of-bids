@@ -1,7 +1,7 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { LOCAL_STORAGE } from '../../models/local-storage';
+import { LOCAL_STORAGE } from '../../../models/local-storage';
 
 export enum Themes {
   LIGHT_THEME = 'light-theme',

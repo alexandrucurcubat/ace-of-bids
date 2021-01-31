@@ -3,11 +3,11 @@
   <td-search-box
     backIcon="keyboard_arrow_right"
     clearIcon="clear"
-    placeholder="Căutare mașină"
+    placeholder="Căutare licitații"
     [showUnderline]="true"
   ></td-search-box>
-  <button mat-button [matMenuTriggerFor]="menu">Licitații</button>
-  <mat-menu #menu="matMenu">
+  <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
+  <mat-menu #auctionsMenu="matMenu">
     <button mat-menu-item>
       <mat-icon>sensors</mat-icon>
       <span class="live">Live</span>
@@ -17,7 +17,6 @@
       <span>Închise</span>
     </button>
   </mat-menu>
-  <button mat-button>Cum licităm</button>
   <button mat-button>Despre noi</button>
   <button
     mat-button
@@ -29,10 +28,20 @@
   </button>
   <button
     mat-button
-    color="accent"
-    (click)="onLogout()"
+    color="primary"
+    [matMenuTriggerFor]="accountMenu"
     *ngIf="loggedUser$ | async"
   >
-    Deconectare
+    Contul meu
   </button>
+  <mat-menu #accountMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span> {{ (loggedUser$ | async)?.username }}</span>
+    </button>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span class="warn">Deconectare</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
