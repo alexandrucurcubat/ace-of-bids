@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuctionsClosedComponent } from './auctions/auctions-closed/auctions-closed.component';
 import { AuctionsLiveComponent } from './auctions/auctions-live/auctions-live.component';
 import { AboutComponent } from './about/about.component';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auctions/live', pathMatch: 'full' },
@@ -23,6 +24,7 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () =>
       import('./account/account.module').then((m) => m.AccountModule),
+    canLoad: [AuthGuard],
   },
   { path: '**', redirectTo: 'auctions/live' },
 ];

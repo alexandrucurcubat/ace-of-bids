@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -20,7 +21,11 @@ export class AuthService {
   private tokenTimer: any;
   loggedUser$ = this.loggedUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService,
+    private router: Router
+  ) {}
 
   login(loginData: LoginData): Observable<AuthResponse> {
     return this.http
@@ -54,6 +59,7 @@ export class AuthService {
 
   logout(): void {
     this.loggedUserSubject.next(null);
+    this.router.navigate(['']);
     clearTimeout(this.tokenTimer);
     localStorage.removeItem(LOCAL_STORAGE.ACCESS_TOKEN);
   }

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { DrawerComponent } from './drawer.component';
 import { AuthModule } from 'src/app/auth/auth.module';
@@ -12,7 +13,12 @@ describe('DrawerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DrawerComponent],
-      imports: [AuthModule, MaterialModule, BrowserAnimationsModule],
+      imports: [
+        AuthModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        RouterTestingModule,
+      ],
     }).compileComponents();
   });
 
