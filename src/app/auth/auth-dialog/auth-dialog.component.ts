@@ -12,7 +12,7 @@ import { SubSink } from 'subsink';
 
 import { AuthService } from '../services/auth.service';
 import { AuthFormType } from '../models/auth-form-type';
-import { LoadingService } from 'src/app/core/loading/loading.service';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
 
 @Component({
   selector: 'ace-auth-dialog',

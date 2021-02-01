@@ -1,6 +1,5 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { TdDialogService } from '@covalent/core/dialogs';
 
@@ -8,13 +7,12 @@ import {
   Themes,
   ThemingService,
 } from './shared/ui/theming/services/theming.service';
-import { AuthDialogComponent } from './shared/auth/auth-dialog/auth-dialog.component';
 import { environment } from 'src/environments/environment';
 import { Environment } from './shared/models/environment';
 import { version } from '../../package.json';
-import { AuthService } from './shared/auth/services/auth.service';
-import { User } from './shared/models/user';
-import { LoadingService } from './core/loading/loading.service';
+import { LoadingService } from './shared/services/loading/loading.service';
+import { AuthService } from './auth/services/auth.service';
+import { DrawerService } from './shared/ui/drawer/services/drawer.service';
 
 @Component({
   selector: 'ace-root',
@@ -27,11 +25,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ThemesEnum = Themes;
   themingSubscription = new Subscription();
   isLoading$!: Observable<boolean>;
-  loggedUser$!: Observable<User | null>;
   environment!: Environment;
 
   constructor(
-    private dialog: MatDialog,
+    private drawerService: DrawerService,
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer,
     private dialogService: TdDialogService,
@@ -47,22 +44,16 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     );
     this.isLoading$ = this.loadingService.isLoading$;
-    this.loggedUser$ = this.authService.loggedUser$;
     this.authService.autoLogin();
     this.environment = environment;
   }
 
-  onOpenAuthDialog(): void {
-    const authDialog = this.dialog.open(AuthDialogComponent);
-    authDialog.updatePosition({ top: '100px' });
+  toggleDrawer() {
+    this.drawerService.toggle();
   }
 
   onChangeTheme(theme: Themes): void {
     this.themingService.changeTheme(theme);
-  }
-
-  onLogout(): void {
-    this.authService.logout();
   }
 
   onDEV(): void {

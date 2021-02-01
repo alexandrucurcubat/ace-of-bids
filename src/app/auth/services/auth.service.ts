@@ -5,14 +5,14 @@ import { catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { environment } from 'src/environments/environment';
-import { LOCAL_STORAGE } from '../../models/local-storage';
-import { User } from '../../models/user';
 import {
   LoginData,
   RegistrationData,
   PasswordResetData,
 } from '../models/auth-form-data';
 import { AuthResponse } from '../models/auth-response';
+import { User } from 'src/app/shared/models/user';
+import { LOCAL_STORAGE } from 'src/app/shared/models/local-storage';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
