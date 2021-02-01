@@ -11,16 +11,24 @@
         Licitații
       </mat-list-option>
       <mat-menu #auctionsMenu="matMenu">
-        <button mat-menu-item (click)="drawer.close()">
+        <button
+          mat-menu-item
+          (click)="drawer.close()"
+          routerLink="/auctions/live"
+        >
           <mat-icon>sensors</mat-icon>
           <span class="live">Live</span>
         </button>
-        <button mat-menu-item (click)="drawer.close()">
+        <button
+          mat-menu-item
+          (click)="drawer.close()"
+          routerLink="/auctions/closed"
+        >
           <mat-icon>gavel</mat-icon>
           <span>Închise</span>
         </button>
       </mat-menu>
-      <mat-list-option (click)="drawer.close()">
+      <mat-list-option (click)="drawer.close()" routerLink="/about">
         <mat-icon mat-list-icon>help</mat-icon>
         Despre noi
       </mat-list-option>
@@ -40,7 +48,7 @@
         Contul meu
       </mat-list-option>
       <mat-menu #accountMenu="matMenu">
-        <button mat-menu-item (click)="drawer.close()">
+        <button mat-menu-item (click)="drawer.close()" routerLink="/account">
           <mat-icon>person</mat-icon>
           <span> {{ (loggedUser$ | async)?.username }}</span>
         </button>
@@ -73,39 +81,9 @@
         </button>
       </span>
     </div>
+    <router-outlet></router-outlet>
     <button id="drawer-btn" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam aut
-    obcaecati quo nobis dicta at nisi itaque reiciendis debitis sint, enim quae
-    impedit! Hic mollitia repellendus quia rem veritatis vitae? Harum officia
-    ab, suscipit natus, ipsam voluptatum ducimus modi deserunt quia minus
-    laboriosam recusandae, consectetur corporis! Omnis qui molestias reiciendis
-    dolorum unde nisi rem ab aspernatur. Nostrum est inventore maiores. Aut,
-    ipsa ut laudantium harum ullam voluptas eius adipisci quos saepe autem eaque
-    blanditiis quisquam porro, deserunt impedit. Ex optio, minus natus possimus
-    atque quidem accusantium officia beatae nobis laudantium! Quasi blanditiis
-    adipisci vero eveniet explicabo voluptas ea deserunt, soluta, dolores vel
-    suscipit perferendis optio dolorum praesentium sapiente aperiam rerum
-    consequatur laborum aliquid fugiat? Debitis non alias consectetur
-    perferendis voluptates? Quibusdam odit unde, nesciunt velit possimus
-    recusandae atque eligendi, dicta dignissimos hic quod. Animi quis officia
-    ipsam blanditiis dolorem a eligendi odit ex, laboriosam tenetur, cumque
-    quasi, cupiditate adipisci sint. Saepe, ducimus tempore velit explicabo
-    praesentium autem officiis reprehenderit mollitia id blanditiis amet tempora
-    exercitationem nam error asperiores ex deserunt eligendi. Ratione maxime
-    eius itaque ea facilis ab possimus quo. Tenetur necessitatibus debitis sed
-    fuga, eius aliquid voluptas exercitationem velit, atque facere doloremque
-    laborum accusamus eligendi error nesciunt in harum cumque modi impedit, et
-    incidunt eum voluptate corrupti? Iusto, sunt. Placeat vel quasi eum adipisci
-    corrupti nostrum omnis ipsum, accusamus velit voluptate provident est totam
-    quia quae fuga asperiores, vitae aut obcaecati ipsam repellat beatae
-    incidunt tenetur iusto. Aliquam, mollitia. Fugit incidunt temporibus illo
-    reiciendis laboriosam a alias maiores cum sunt repudiandae odio animi,
-    debitis ex optio ipsa provident? Impedit suscipit aliquam illo asperiores
-    tempora deleniti eos dignissimos quis accusantium. Est laborum qui,
-    reiciendis a consequuntur fugiat aut sequi ipsa ullam iste consectetur
-    officia. Dignissimos iure, rerum dolor illo sapiente recusandae accusantium
-    enim!
   </mat-drawer-content>
 </mat-drawer-container>

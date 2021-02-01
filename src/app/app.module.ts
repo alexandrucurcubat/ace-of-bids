@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './core/loading/loading.interceptor';
 import { JwtInterceptor } from './shared/auth/interceptors/jwt.interceptor';
+import { AuctionsModule } from './auctions/auctions.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { JwtInterceptor } from './shared/auth/interceptors/jwt.interceptor';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    AuctionsModule,
   ],
   bootstrap: [AppComponent],
   providers: [

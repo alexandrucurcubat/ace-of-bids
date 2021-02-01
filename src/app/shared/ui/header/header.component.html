@@ -8,16 +8,16 @@
   ></td-search-box>
   <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
   <mat-menu #auctionsMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/auctions/live">
       <mat-icon>sensors</mat-icon>
       <span class="live">Live</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/auctions/closed">
       <mat-icon>gavel</mat-icon>
       <span>Închise</span>
     </button>
   </mat-menu>
-  <button mat-button>Despre noi</button>
+  <button mat-button routerLink="/about">Despre noi</button>
   <button
     mat-button
     color="primary"
@@ -35,7 +35,7 @@
     Contul meu
   </button>
   <mat-menu #accountMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item routerLink="/account">
       <mat-icon>person</mat-icon>
       <span> {{ (loggedUser$ | async)?.username }}</span>
     </button>

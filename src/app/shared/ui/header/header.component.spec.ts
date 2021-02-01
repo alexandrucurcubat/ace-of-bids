@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { MaterialModule } from '../material/material.module';
 import { HeaderComponent } from './header.component';
+import { AuthModule } from '../../auth/auth.module';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -12,11 +11,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [MaterialModule, HttpClientTestingModule, JwtModule],
-      providers: [
-        JwtHelperService,
-        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
-      ],
+      imports: [MaterialModule, AuthModule],
     }).compileComponents();
   });
 

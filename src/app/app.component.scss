@@ -27,7 +27,7 @@ mat-drawer-container {
     right: 16px;
   }
 
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 600px) {
     #drawer-btn {
       display: none;
     }
