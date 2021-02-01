@@ -48,7 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.environment = environment;
   }
 
-  toggleDrawer() {
+  toggleDrawer(): void {
     this.drawerService.toggle();
   }
 
