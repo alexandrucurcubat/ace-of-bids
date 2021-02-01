@@ -8,20 +8,26 @@ mat-drawer-container {
   padding-top: 64px;
 
   mat-drawer {
-    padding-top: 55px;
+    padding-top: 60px;
     button {
       margin: 5px;
     }
     @media screen and (max-width: 599px) {
-      padding-top: 45px;
+      padding-top: 55px;
     }
   }
 
-  main {
+  mat-drawer-content {
     padding: 16px;
   }
 
-  @media screen and (min-width: 960px) {
+  #drawer-btn {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  @media screen and (min-width: 600px) {
     #drawer-btn {
       display: none;
     }

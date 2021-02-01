@@ -39,7 +39,24 @@ $dark-theme: mat-dark-theme(
   --primary: #00bcd4;
   --accent: #ff9800;
   --warn: #f44336;
-  --success: #4caf50;
+  --live: #4caf50;
+  --gray: #424242;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 html,
@@ -67,8 +84,8 @@ a {
   color: var(--warn);
 }
 
-.success {
-  color: var(--success);
+.live {
+  color: var(--live);
 }
 
 .bg-primary {
@@ -106,8 +123,4 @@ a {
 
 .flex-space-around {
   justify-content: space-around;
-}
-
-.ml-auto {
-  margin-left: auto;
 }

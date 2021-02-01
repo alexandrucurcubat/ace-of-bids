@@ -1,14 +1,14 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+import { LOCAL_STORAGE } from '../../../models/local-storage';
+
 export enum Themes {
   LIGHT_THEME = 'light-theme',
   DARK_THEME = 'dark-theme',
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class ThemingService {
   themes = [Themes.DARK_THEME, Themes.LIGHT_THEME];
   theme = new BehaviorSubject(Themes.LIGHT_THEME);
@@ -17,7 +17,7 @@ export class ThemingService {
     const darkModeOn =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const storedTheme = localStorage.getItem('theme');
+    const storedTheme = localStorage.getItem(LOCAL_STORAGE.THEME);
 
     if (storedTheme) {
       this.theme.next(storedTheme as Themes);
@@ -36,6 +36,6 @@ export class ThemingService {
 
   changeTheme(theme: Themes): void {
     this.theme.next(theme);
-    localStorage.setItem('theme', theme);
+    localStorage.setItem(LOCAL_STORAGE.THEME, theme);
   }
 }

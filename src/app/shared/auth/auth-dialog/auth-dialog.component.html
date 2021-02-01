@@ -11,7 +11,7 @@
   </p>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="loginEmail" />
+    <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="loginEmail?.errors?.required">
       Lipsește email-ul
@@ -20,13 +20,20 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Parolă</mat-label>
-    <input type="password" matInput formControlName="loginPassword" />
+    <input type="password" matInput formControlName="password" />
     <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="loginPassword?.errors?.required">
       Lipsește parola
     </mat-error>
   </mat-form-field>
-  <button id="btn-sign-in" mat-flat-button color="primary">Conectare</button>
+  <button
+    id="btn-sign-in"
+    mat-flat-button
+    color="primary"
+    [disabled]="isLoading$ | async"
+  >
+    Conectare
+  </button>
   <a href="" (click)="onPasswordResetMode($event)">Ai uitat parola?</a>
 </form>
 <form
@@ -42,7 +49,7 @@
   </p>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="registrationEmail" />
+    <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="registrationEmail?.errors?.required">
       Lipsește email-ul
@@ -53,8 +60,8 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Nume utilizator</mat-label>
-    <input type="text" matInput formControlName="registrationUsername" />
-    <mat-icon matSuffix>account_circle</mat-icon>
+    <input type="text" matInput formControlName="username" />
+    <mat-icon matSuffix>person</mat-icon>
     <mat-error *ngIf="registrationUsername?.errors?.required">
       Lipsește numele de utilizator
     </mat-error>
@@ -64,7 +71,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Parolă</mat-label>
-    <input type="password" matInput formControlName="registrationPassword" />
+    <input type="password" matInput formControlName="password" />
     <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="registrationPassword?.errors?.required">
       Lipsește parola
@@ -75,12 +82,8 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Confirmare Parolă</mat-label>
-    <input
-      type="password"
-      matInput
-      formControlName="registrationPasswordConfirmation"
-    />
-    <mat-icon matSuffix>lock</mat-icon>
+    <input type="password" matInput formControlName="passwordConfirmation" />
+    <mat-icon matSuffix>verified_user</mat-icon>
     <mat-error *ngIf="registrationPasswordConfirmation?.errors?.required">
       Lipsește parola de confirmare
     </mat-error>
@@ -88,7 +91,9 @@
       Parola nu coincide
     </mat-error>
   </mat-form-field>
-  <button mat-flat-button color="primary">Înregistrare</button>
+  <button mat-flat-button color="primary" [disabled]="isLoading$ | async">
+    Înregistrare
+  </button>
 </form>
 <form
   class="flex flex-column"
@@ -103,7 +108,7 @@
   </p>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="email" matInput formControlName="passwordResetEmail" />
+    <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="passwordResetEmail?.errors?.required">
       Lipsește email-ul
@@ -112,5 +117,7 @@
       Email invalid
     </mat-error>
   </mat-form-field>
-  <button mat-flat-button color="primary">Resetare parolă</button>
+  <button mat-flat-button color="primary" [disabled]="isLoading$ | async">
+    Resetare parolă
+  </button>
 </form>
