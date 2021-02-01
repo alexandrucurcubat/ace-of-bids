@@ -34,9 +34,11 @@ export class AuthService {
         tap((authResponse: AuthResponse) => {
           console.log(authResponse);
           const token = authResponse.token;
-          const expiresIn = authResponse.expiresIn;
+          const expirationDate = this.jwtHelper.getTokenExpirationDate(token);
+          if (expirationDate) {
+            this.setAuthTimer(expirationDate.toISOString());
+          }
           this.loggedUserSubject.next(this.jwtHelper.decodeToken(token).user);
-          this.setAuthTimer(expiresIn);
           localStorage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, token);
         }),
         catchError((err) => {
@@ -91,19 +93,23 @@ export class AuthService {
     return localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN);
   }
 
-  private setAuthTimer(expiresIn: number): void {
-    this.tokenTimer = setTimeout(() => {
-      this.logout();
-    }, expiresIn * 1000);
+  private setAuthTimer(expirationDate: string | null): void {
+    if (expirationDate) {
+      this.tokenTimer = setTimeout(() => {
+        this.logout();
+      }, this.expiresIn(expirationDate) * 1000);
+    }
   }
 
   private resumeAuthTimer(expirationDate: string | null): void {
     if (expirationDate) {
-      const expiresIn =
-        (new Date(expirationDate).getTime() - new Date().getTime()) / 1000;
-      if (expiresIn > 0) {
-        this.setAuthTimer(expiresIn);
+      if (this.expiresIn(expirationDate) > 0) {
+        this.setAuthTimer(expirationDate);
       }
     }
+  }
+
+  private expiresIn(expirationDate: string): number {
+    return (new Date(expirationDate).getTime() - new Date().getTime()) / 1000;
   }
 }
