@@ -6,8 +6,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { LoadingInterceptor } from './shared/services/loading/loading.interceptor';
-import { JwtInterceptor } from './auth/interceptors/jwt.interceptor';
+import { LoadingInterceptor } from './core/loading.interceptor';
+import { JwtInterceptor } from './core/jwt.interceptor';
 import { AuctionsModule } from './auctions/auctions.module';
 import { AuthModule } from './auth/auth.module';
 
