@@ -11,14 +11,14 @@ import {
   RegistrationData,
   PasswordResetData,
 } from '../models/auth-form-data';
-import { AuthResponse } from '../models/auth-response';
 import { User } from 'src/app/shared/models/user';
 import { LOCAL_STORAGE } from 'src/app/shared/models/local-storage';
+import { AuthJwt } from '../models/auth-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private loggedUserSubject = new BehaviorSubject<User | null>(null);
-  private tokenTimer: any;
+  private jwtTimer: any;
   loggedUser$ = this.loggedUserSubject.asObservable();
 
   constructor(
@@ -27,19 +27,18 @@ export class AuthService {
     private router: Router
   ) {}
 
-  login(loginData: LoginData): Observable<AuthResponse> {
+  login(loginData: LoginData): Observable<AuthJwt> {
     return this.http
-      .post<AuthResponse>(`${environment.apiUrl}/users/login`, loginData)
+      .post<AuthJwt>(`${environment.apiUrl}/auth/login`, loginData)
       .pipe(
-        tap((authResponse: AuthResponse) => {
-          console.log(authResponse);
-          const token = authResponse.token;
-          const expirationDate = this.jwtHelper.getTokenExpirationDate(token);
+        tap((authJwt: AuthJwt) => {
+          const jwt = authJwt.jwt;
+          const expirationDate = this.jwtHelper.getTokenExpirationDate(jwt);
           if (expirationDate) {
-            this.setAuthTimer(expirationDate.toISOString());
+            this.setJwtTimer(expirationDate.toISOString());
           }
-          this.loggedUserSubject.next(this.jwtHelper.decodeToken(token).user);
-          localStorage.setItem(LOCAL_STORAGE.ACCESS_TOKEN, token);
+          this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
+          localStorage.setItem(LOCAL_STORAGE.JWT, jwt);
         }),
         catchError((err) => {
           console.log(err);
@@ -49,12 +48,12 @@ export class AuthService {
   }
 
   autoLogin(): void {
-    const token = this.getToken();
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      this.loggedUserSubject.next(this.jwtHelper.decodeToken(token).user);
-      const expirationDate = this.jwtHelper.getTokenExpirationDate(token);
+    const jwt = this.getJwt();
+    if (jwt && !this.jwtHelper.isTokenExpired(jwt)) {
+      this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
+      const expirationDate = this.jwtHelper.getTokenExpirationDate(jwt);
       if (expirationDate) {
-        this.resumeAuthTimer(expirationDate.toISOString());
+        this.resumeJwtTimer(expirationDate.toISOString());
       }
     }
   }
@@ -62,17 +61,14 @@ export class AuthService {
   logout(): void {
     this.loggedUserSubject.next(null);
     this.router.navigate(['']);
-    clearTimeout(this.tokenTimer);
-    localStorage.removeItem(LOCAL_STORAGE.ACCESS_TOKEN);
+    clearTimeout(this.jwtTimer);
+    localStorage.removeItem(LOCAL_STORAGE.JWT);
   }
 
   register(registrationData: RegistrationData): Observable<User> {
     return this.http
-      .post<User>(`${environment.apiUrl}/users/register`, registrationData)
+      .post<User>(`${environment.apiUrl}/auth/register`, registrationData)
       .pipe(
-        tap((user: User) => {
-          console.log(user);
-        }),
         catchError((err) => {
           console.log(err);
           return EMPTY;
@@ -80,31 +76,26 @@ export class AuthService {
       );
   }
 
-  isAuthenticated(): boolean {
-    const token = localStorage.get(LOCAL_STORAGE.ACCESS_TOKEN);
-    return !this.jwtHelper.isTokenExpired(token);
-  }
-
   resetPassword(passwordResetData: PasswordResetData): void {
     console.log('passwordReset', passwordResetData);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(LOCAL_STORAGE.ACCESS_TOKEN);
+  getJwt(): string | null {
+    return localStorage.getItem(LOCAL_STORAGE.JWT);
   }
 
-  private setAuthTimer(expirationDate: string | null): void {
+  private setJwtTimer(expirationDate: string | null): void {
     if (expirationDate) {
-      this.tokenTimer = setTimeout(() => {
+      this.jwtTimer = setTimeout(() => {
         this.logout();
       }, this.expiresIn(expirationDate) * 1000);
     }
   }
 
-  private resumeAuthTimer(expirationDate: string | null): void {
+  private resumeJwtTimer(expirationDate: string | null): void {
     if (expirationDate) {
       if (this.expiresIn(expirationDate) > 0) {
-        this.setAuthTimer(expirationDate);
+        this.setJwtTimer(expirationDate);
       }
     }
   }
