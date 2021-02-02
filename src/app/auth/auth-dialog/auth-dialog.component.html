@@ -10,7 +10,7 @@
     <a href="" (click)="onRegistrationMode($event)">Înregistrează-te aici</a>
   </p>
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>Email *</mat-label>
     <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="loginEmail?.errors?.required">
@@ -19,7 +19,7 @@
     <mat-error *ngIf="loginEmail?.errors?.pattern">Email invalid</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Parolă</mat-label>
+    <mat-label>Parolă *</mat-label>
     <input type="password" matInput formControlName="password" />
     <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="loginPassword?.errors?.required">
@@ -51,7 +51,7 @@
     <a href="" (click)="onLoginMode($event)">Conectează-te</a>
   </p>
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>Email *</mat-label>
     <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="registrationEmail?.errors?.required">
@@ -65,7 +65,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Nume utilizator</mat-label>
+    <mat-label>Nume utilizator *</mat-label>
     <input type="text" matInput formControlName="username" />
     <mat-icon matSuffix>person</mat-icon>
     <mat-error *ngIf="registrationUsername?.errors?.required">
@@ -79,7 +79,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Parolă</mat-label>
+    <mat-label>Parolă *</mat-label>
     <input type="password" matInput formControlName="password" />
     <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="registrationPassword?.errors?.required">
@@ -90,7 +90,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Confirmare Parolă</mat-label>
+    <mat-label>Confirmă Parola *</mat-label>
     <input type="password" matInput formControlName="passwordConfirmation" />
     <mat-icon matSuffix>verified_user</mat-icon>
     <mat-error *ngIf="registrationPasswordConfirmation?.errors?.required">
@@ -116,7 +116,7 @@
     <a href="" (click)="onLoginMode($event)">Conectează-te</a>
   </p>
   <mat-form-field>
-    <mat-label>Email</mat-label>
+    <mat-label>Email *</mat-label>
     <input type="email" matInput formControlName="email" />
     <mat-icon matSuffix>alternate_email</mat-icon>
     <mat-error *ngIf="passwordResetEmail?.errors?.required">

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import {

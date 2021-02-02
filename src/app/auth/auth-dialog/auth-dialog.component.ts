@@ -26,9 +26,9 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   FormType = AuthFormType;
   currentForm = AuthFormType.LOGIN;
-  loginForm: FormGroup;
-  registrationForm: FormGroup;
-  passwordResetForm: FormGroup;
+  loginForm!: FormGroup;
+  registrationForm!: FormGroup;
+  passwordResetForm!: FormGroup;
   isLoading$!: Observable<boolean>;
 
   constructor(
@@ -38,22 +38,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     private snackbar: MatSnackBar,
     private loadingService: LoadingService,
     private router: Router
-  ) {
-    const EMAIL_PATTERN = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      password: ['', [Validators.required]],
-    });
-    this.registrationForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordConfirmation: ['', [Validators.required]],
-    });
-    this.passwordResetForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-    });
-  }
+  ) {}
 
   get loginEmail(): AbstractControl | null {
     return this.loginForm.get('email');
@@ -85,6 +70,20 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading$ = this.loadingService.isLoading$;
+    const EMAIL_PATTERN = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+      password: ['', [Validators.required]],
+    });
+    this.registrationForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      passwordConfirmation: ['', [Validators.required]],
+    });
+    this.passwordResetForm = this.fb.group({
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
+    });
   }
 
   onLogin(): void {

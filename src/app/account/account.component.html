@@ -1,1 +1,81 @@
-<p>{{ loggedUser$ | async | json }}</p>
+<mat-card *ngIf="loggedUser$ | async as loggedUser">
+  <form [formGroup]="accountForm" (ngSubmit)="updateAccount()">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img
+          src="https://picsum.photos/40/40"
+          alt="avatar"
+          class="mat-card-avatar"
+        />
+      </div>
+      <mat-card-title>{{ loggedUser.username }}</mat-card-title>
+      <mat-card-subtitle>{{ loggedUser.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="flex flex-column">
+        <mat-form-field>
+          <mat-label>Nume utilizator *</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="username"
+            [value]="loggedUser.username"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="username?.errors?.required">
+            Lipsește numele de utilizator
+          </mat-error>
+          <mat-error *ngIf="username?.errors?.minlength">
+            Numele de uitlizator trebuie să aibă minim 3 caractere
+          </mat-error>
+          <mat-error *ngIf="username?.errors?.usernameExists">
+            Nume de uitlizator deja înregistrat
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Parola veche *</mat-label>
+          <input type="password" matInput formControlName="oldPassword" />
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="oldPassword?.errors?.required">
+            Lipsește parola
+          </mat-error>
+          <mat-error *ngIf="oldPassword?.errors?.invalidPassword">
+            Parolă incorectă
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Parola nouă</mat-label>
+          <input type="password" matInput formControlName="newPassword" />
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="newPassword?.errors?.minlength">
+            Parola trebuie să aibă minim 6 caractere
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirmă parola nouă</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="newPasswordConfirmation"
+          />
+          <mat-icon matSuffix>verified_user</mat-icon>
+          <mat-error *ngIf="newPasswordConfirmation?.errors?.required">
+            Lipsește parola de confirmare
+          </mat-error>
+          <mat-error *ngIf="newPasswordConfirmation?.errors?.notMatching">
+            Parola nu coincide
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-button
+        color="primary"
+        [disabled]="(isLoading$ | async) || !updateable"
+      >
+        Salvează modificările
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
