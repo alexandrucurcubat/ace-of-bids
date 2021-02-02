@@ -6,8 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 import { AuthService } from '../services/auth.service';
@@ -32,20 +35,23 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private dialogRef: MatDialogRef<AuthDialogComponent>,
-    private loadingService: LoadingService
+    private snackbar: MatSnackBar,
+    private loadingService: LoadingService,
+    private router: Router
   ) {
+    const EMAIL_PATTERN = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
       password: ['', [Validators.required]],
     });
     this.registrationForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       passwordConfirmation: ['', [Validators.required]],
     });
     this.passwordResetForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
     });
   }
 
@@ -85,6 +91,13 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     if (this.loginForm.valid) {
       this.subs.sink = this.authService
         .login(this.loginForm.value)
+        .pipe(
+          catchError((err: HttpErrorResponse) => {
+            const message = err.error.message;
+            this.setErrorMessage(message);
+            return EMPTY;
+          })
+        )
         .subscribe(() => this.dialogRef.close());
     }
   }
@@ -105,8 +118,19 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
       } = this.registrationForm.value;
       this.subs.sink = this.authService
         .register(registrationData)
-        .pipe(switchMap(() => this.authService.login(registrationData)))
-        .subscribe(() => this.dialogRef.close());
+        .pipe(
+          switchMap(() => this.authService.login(registrationData)),
+          catchError((err: HttpErrorResponse) => {
+            const message = err.error.message;
+            this.setErrorMessage(message);
+            return EMPTY;
+          })
+        )
+        .subscribe(() => {
+          this.dialogRef.close();
+          this.router.navigate(['about']);
+          this.snackbar.open('Înregistrare reușită cu succes!', 'OK');
+        });
     }
   }
 
@@ -135,6 +159,33 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
     this.currentForm = AuthFormType.PASSWORD_RESET;
     this.loginForm.reset();
     this.registrationForm.reset();
+  }
+
+  private setErrorMessage(message: string): void {
+    switch (message) {
+      case 'invalid credentials':
+        this.loginForm.controls.password.setErrors({
+          invalidCredentials: true,
+        });
+        break;
+      case 'email exists':
+        this.registrationForm.controls.email.setErrors({
+          emailExists: true,
+        });
+        break;
+      case 'username exists':
+        this.registrationForm.controls.username.setErrors({
+          usernameExists: true,
+        });
+        break;
+      default:
+        this.dialogRef.close();
+        this.snackbar.open(
+          'Ceva nu a funcționat cum trebuie. Problema se investighează.',
+          'OK'
+        );
+        console.log(message);
+    }
   }
 
   ngOnDestroy(): void {

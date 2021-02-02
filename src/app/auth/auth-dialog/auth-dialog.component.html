@@ -16,7 +16,7 @@
     <mat-error *ngIf="loginEmail?.errors?.required">
       Lipsește email-ul
     </mat-error>
-    <mat-error *ngIf="loginEmail?.errors?.email">Email invalid</mat-error>
+    <mat-error *ngIf="loginEmail?.errors?.pattern">Email invalid</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Parolă</mat-label>
@@ -24,6 +24,9 @@
     <mat-icon matSuffix>lock</mat-icon>
     <mat-error *ngIf="loginPassword?.errors?.required">
       Lipsește parola
+    </mat-error>
+    <mat-error *ngIf="loginPassword?.errors?.invalidCredentials">
+      Email sau parolă incorectă
     </mat-error>
   </mat-form-field>
   <button
@@ -54,9 +57,12 @@
     <mat-error *ngIf="registrationEmail?.errors?.required">
       Lipsește email-ul
     </mat-error>
-    <mat-error *ngIf="registrationEmail?.errors?.email"
-      >Email invalid</mat-error
-    >
+    <mat-error *ngIf="registrationEmail?.errors?.pattern">
+      Email invalid
+    </mat-error>
+    <mat-error *ngIf="registrationEmail?.errors?.emailExists">
+      Email deja înregistrat
+    </mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Nume utilizator</mat-label>
@@ -67,6 +73,9 @@
     </mat-error>
     <mat-error *ngIf="registrationUsername?.errors?.minlength">
       Numele de uitlizator trebuie să aibă minim 3 caractere
+    </mat-error>
+    <mat-error *ngIf="registrationUsername?.errors?.usernameExists">
+      Nume de uitlizator deja înregistrat
     </mat-error>
   </mat-form-field>
   <mat-form-field>
@@ -113,7 +122,7 @@
     <mat-error *ngIf="passwordResetEmail?.errors?.required">
       Lipsește email-ul
     </mat-error>
-    <mat-error *ngIf="passwordResetEmail?.errors?.email">
+    <mat-error *ngIf="passwordResetEmail?.errors?.pattern">
       Email invalid
     </mat-error>
   </mat-form-field>

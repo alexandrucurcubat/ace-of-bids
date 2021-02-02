@@ -39,10 +39,6 @@ export class AuthService {
           }
           this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
           localStorage.setItem(LOCAL_STORAGE.JWT, jwt);
-        }),
-        catchError((err) => {
-          console.log(err);
-          return EMPTY;
         })
       );
   }
@@ -66,14 +62,10 @@ export class AuthService {
   }
 
   register(registrationData: RegistrationData): Observable<User> {
-    return this.http
-      .post<User>(`${environment.apiUrl}/auth/register`, registrationData)
-      .pipe(
-        catchError((err) => {
-          console.log(err);
-          return EMPTY;
-        })
-      );
+    return this.http.post<User>(
+      `${environment.apiUrl}/auth/register`,
+      registrationData
+    );
   }
 
   resetPassword(passwordResetData: PasswordResetData): void {
