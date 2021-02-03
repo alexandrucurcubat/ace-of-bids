@@ -1,5 +1,5 @@
 <mat-card *ngIf="loggedUser$ | async as loggedUser">
-  <form [formGroup]="accountForm" (ngSubmit)="updateAccount()">
+  <form [formGroup]="accountForm" (ngSubmit)="updateUser()">
     <mat-card-header>
       <div mat-card-avatar>
         <img
@@ -39,7 +39,7 @@
           <mat-error *ngIf="oldPassword?.errors?.required">
             Lipsește parola
           </mat-error>
-          <mat-error *ngIf="oldPassword?.errors?.invalidPassword">
+          <mat-error *ngIf="oldPassword?.errors?.invalidCredentials">
             Parolă incorectă
           </mat-error>
         </mat-form-field>
@@ -59,9 +59,6 @@
             formControlName="newPasswordConfirmation"
           />
           <mat-icon matSuffix>verified_user</mat-icon>
-          <mat-error *ngIf="newPasswordConfirmation?.errors?.required">
-            Lipsește parola de confirmare
-          </mat-error>
           <mat-error *ngIf="newPasswordConfirmation?.errors?.notMatching">
             Parola nu coincide
           </mat-error>

@@ -76,6 +76,10 @@ export class AuthService {
     return localStorage.getItem(LOCAL_STORAGE.JWT);
   }
 
+  updateLoggedUser(user: User): void {
+    this.loggedUserSubject.next(user);
+  }
+
   private setJwtTimer(expirationDate: string | null): void {
     if (expirationDate) {
       this.jwtTimer = setTimeout(() => {

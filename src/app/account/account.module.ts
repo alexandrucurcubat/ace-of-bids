@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AccountComponent } from './account.component';
@@ -10,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [AccountComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AccountRoutingModule,
     SharedModule,
