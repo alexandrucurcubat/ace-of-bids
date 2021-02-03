@@ -18,7 +18,7 @@ export class AccountService {
   updateUsername(id: number, usernameData: UsernameData): Observable<User> {
     return this.http
       .post<User>(
-        `${environment.apiUrl}/users/update/username/${id}`,
+        `${environment.apiUrl}/auth/update/username/${id}`,
         usernameData
       )
       .pipe(
@@ -33,7 +33,7 @@ export class AccountService {
 
   updatePassword(id: number, passwordData: PasswordData): Observable<User> {
     return this.http.post<User>(
-      `${environment.apiUrl}/users/update/password/${id}`,
+      `${environment.apiUrl}/auth/update/password/${id}`,
       passwordData
     );
   }
