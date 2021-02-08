@@ -4,6 +4,7 @@ export interface User {
   username: string;
   password?: string;
   role: UserRole;
+  jwt?: string;
 }
 
 export enum UserRole {

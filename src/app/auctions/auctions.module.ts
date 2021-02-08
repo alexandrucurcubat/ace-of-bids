@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AuctionsComponent } from './auctions.component';
 import { AuctionsLiveComponent } from './auctions-live/auctions-live.component';
 import { AuctionsClosedComponent } from './auctions-closed/auctions-closed.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,6 @@ import { AuctionsClosedComponent } from './auctions-closed/auctions-closed.compo
     AuctionsLiveComponent,
     AuctionsClosedComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
 })
 export class AuctionsModule {}

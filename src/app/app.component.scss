@@ -5,21 +5,7 @@ mat-progress-bar {
 
 mat-drawer-container {
   min-height: 100vh;
-  padding-top: 64px;
-
-  mat-drawer {
-    padding-top: 60px;
-    button {
-      margin: 5px;
-    }
-    @media screen and (max-width: 599px) {
-      padding-top: 55px;
-    }
-  }
-
-  mat-drawer-content {
-    padding: 16px;
-  }
+  padding: 80px 16px 16px;
 
   #drawer-btn {
     position: fixed;
@@ -34,6 +20,6 @@ mat-drawer-container {
   }
 
   @media screen and (max-width: 599px) {
-    padding-top: 56px;
+    padding-top: 72px;
   }
 }

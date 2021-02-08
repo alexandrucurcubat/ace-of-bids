@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from './auth.service';
 import { AuthModule } from '../auth.module';
@@ -8,7 +9,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AuthModule],
+      imports: [AuthModule, RouterTestingModule],
     });
     service = TestBed.inject(AuthService);
   });

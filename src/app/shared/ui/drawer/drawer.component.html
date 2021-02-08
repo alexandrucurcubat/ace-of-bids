@@ -1,0 +1,57 @@
+<mat-drawer #drawer>
+  <h1>Ace<span class="primary">of</span>Bids</h1>
+  <mat-divider></mat-divider>
+  <mat-selection-list [multiple]="false">
+    <mat-list-option [matMenuTriggerFor]="auctionsMenu">
+      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      Licitații
+    </mat-list-option>
+    <mat-menu #auctionsMenu="matMenu">
+      <button
+        mat-menu-item
+        (click)="drawer.close()"
+        routerLink="/auctions/live"
+      >
+        <mat-icon>sensors</mat-icon>
+        <span class="live">Live</span>
+      </button>
+      <button
+        mat-menu-item
+        (click)="drawer.close()"
+        routerLink="/auctions/closed"
+      >
+        <mat-icon>gavel</mat-icon>
+        <span>Închise</span>
+      </button>
+    </mat-menu>
+    <mat-list-option (click)="drawer.close()" routerLink="/about">
+      <mat-icon mat-list-icon>help</mat-icon>
+      Despre noi
+    </mat-list-option>
+    <mat-list-option
+      (click)="drawer.close()"
+      (click)="onOpenAuthDialog()"
+      *ngIf="(loggedUser$ | async) === null"
+    >
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      Conectează-te
+    </mat-list-option>
+    <mat-list-option
+      [matMenuTriggerFor]="accountMenu"
+      *ngIf="loggedUser$ | async"
+    >
+      <mat-icon mat-list-icon>account_circle</mat-icon>
+      Contul meu
+    </mat-list-option>
+    <mat-menu #accountMenu="matMenu">
+      <button mat-menu-item (click)="drawer.close()" routerLink="/account">
+        <mat-icon>person</mat-icon>
+        <span> {{ (loggedUser$ | async)?.username }}</span>
+      </button>
+      <button mat-menu-item (click)="drawer.close()" (click)="onLogout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span class="warn">Deconectare</span>
+      </button>
+    </mat-menu>
+  </mat-selection-list>
+</mat-drawer>
