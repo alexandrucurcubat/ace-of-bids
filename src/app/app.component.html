@@ -2,31 +2,13 @@
   *ngIf="isLoading$ | async"
   mode="indeterminate"
 ></mat-progress-bar>
-<ace-header></ace-header>
-<ace-drawer></ace-drawer>
+<ace-header (changeTheme)="onChangeTheme($event)"></ace-header>
+<ace-drawer (changeTheme)="onChangeTheme($event)"></ace-drawer>
 <mat-drawer-container>
   <mat-drawer-content>
-    <div class="flex flex-end mb-5">
-      <button mat-button *ngIf="!environment.production" (click)="onDEV()">
-        <mat-icon>architecture</mat-icon>
-      </button>
-      <span>
-        <button
-          *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
-          mat-icon-button
-          (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
-        >
-          <mat-icon>brightness_4</mat-icon>
-        </button>
-        <button
-          *ngIf="themeClass === ThemesEnum.DARK_THEME"
-          mat-icon-button
-          (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
-        >
-          <mat-icon class="accent">brightness_5</mat-icon>
-        </button>
-      </span>
-    </div>
+    <button mat-button *ngIf="!environment.production" (click)="onDEV()">
+      <mat-icon>architecture</mat-icon>
+    </button>
     <router-outlet></router-outlet>
     <button id="drawer-btn" mat-fab color="primary" (click)="toggleDrawer()">
       <mat-icon>menu</mat-icon>

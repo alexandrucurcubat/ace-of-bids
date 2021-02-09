@@ -44,4 +44,18 @@
       <span class="warn">Deconectare</span>
     </button>
   </mat-menu>
+  <button
+    *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+    mat-icon-button
+    (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+  >
+    <mat-icon>brightness_4</mat-icon>
+  </button>
+  <button
+    *ngIf="themeClass === ThemesEnum.DARK_THEME"
+    mat-icon-button
+    (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+  >
+    <mat-icon class="accent">brightness_5</mat-icon>
+  </button>
 </mat-toolbar>

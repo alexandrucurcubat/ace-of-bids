@@ -1,12 +1,20 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from '../../models/user';
 import { DrawerService } from './services/drawer.service';
 import { AuthDialogComponent } from 'src/app/auth/auth-dialog/auth-dialog.component';
+import { Themes, ThemingService } from '../theming/services/theming.service';
 
 @Component({
   selector: 'ace-drawer',
@@ -16,15 +24,23 @@ import { AuthDialogComponent } from 'src/app/auth/auth-dialog/auth-dialog.compon
 export class DrawerComponent implements OnInit, AfterViewInit {
   @ViewChild('drawer') drawer!: MatDrawer;
   loggedUser$!: Observable<User | null>;
+  @Output() changeTheme = new EventEmitter();
+  ThemesEnum = Themes;
+  themeClass!: Themes;
+  themingSubscription = new Subscription();
 
   constructor(
     private drawerService: DrawerService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private themingService: ThemingService
   ) {}
 
   ngOnInit(): void {
     this.loggedUser$ = this.authService.loggedUser$;
+    this.themingSubscription = this.themingService.theme.subscribe(
+      (theme: Themes) => (this.themeClass = theme)
+    );
   }
 
   ngAfterViewInit(): void {
@@ -34,6 +50,10 @@ export class DrawerComponent implements OnInit, AfterViewInit {
   onOpenAuthDialog(): void {
     const authDialog = this.dialog.open(AuthDialogComponent);
     authDialog.updatePosition({ top: '100px' });
+  }
+
+  onChangeTheme(theme: Themes): void {
+    this.changeTheme.emit(theme);
   }
 
   onLogout(): void {

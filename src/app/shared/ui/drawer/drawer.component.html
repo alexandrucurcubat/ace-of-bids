@@ -53,5 +53,19 @@
         <span class="warn">Deconectare</span>
       </button>
     </mat-menu>
+    <mat-list-option
+      *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+      (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+    >
+      <mat-icon mat-list-icon>brightness_4</mat-icon>
+      Mod noapte
+    </mat-list-option>
+    <mat-list-option
+      *ngIf="themeClass === ThemesEnum.DARK_THEME"
+      (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+    >
+      <mat-icon mat-list-icon>brightness_5</mat-icon>
+      Mod zi
+    </mat-list-option>
   </mat-selection-list>
 </mat-drawer>
