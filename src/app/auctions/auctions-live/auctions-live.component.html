@@ -24,10 +24,11 @@
   </div>
 </div>
 <mat-divider></mat-divider>
-<div *ngIf="gridView">
+<div class="auctions-grid" *ngIf="gridView">
   <mat-grid-list
     [cols]="gridCols"
-    rowHeight="408px"
+    rowHeight="390px"
+    gutterSize="16px"
     (window:resize)="onResize($event)"
   >
     <mat-grid-tile *ngFor="let auction of auctions">

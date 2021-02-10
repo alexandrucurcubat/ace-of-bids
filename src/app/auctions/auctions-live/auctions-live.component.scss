@@ -24,9 +24,11 @@
   }
 }
 
-mat-card {
-  margin: 8px;
+.auctions-grid {
+  margin-top: 8px;
+}
 
+mat-card {
   img {
     object-fit: cover;
   }
