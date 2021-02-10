@@ -3,27 +3,44 @@ mat-progress-bar {
   z-index: 3;
 }
 
-mat-drawer-container {
-  min-height: 100vh;
-  padding: 80px 16px 16px;
+mat-toolbar {
+  font-weight: bold;
+  position: fixed;
+  z-index: 2;
 
-  mat-drawer-content {
-    overflow: hidden;
-  }
-
-  #drawer-btn {
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-  }
-
-  @media screen and (min-width: 600px) {
-    #drawer-btn {
-      display: none;
-    }
+  td-search-box {
+    flex: 1;
+    font-size: 75%;
   }
 
   @media screen and (max-width: 599px) {
-    padding-top: 72px;
+    button {
+      display: none;
+    }
+  }
+}
+
+mat-sidenav-container {
+  mat-sidenav {
+    padding-top: 55px;
+  }
+
+  mat-sidenav-content {
+    min-height: 100vh;
+    min-height: calc(100vh - 96px);
+    padding: 80px 16px 16px 16px;
+    @media screen and (max-width: 599px) {
+    min-height: calc(100vh - 91px);
+    padding-top: 75px;
+    }
+
+    #sidenav-btn {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      @media screen and (min-width: 600px) {
+        display: none;
+      }
+    }
   }
 }

@@ -5,12 +5,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CovalentModule } from './ui/covalent/covalent.module';
 import { MaterialModule } from './ui/material/material.module';
-import { HeaderComponent } from './ui/header/header.component';
-import { DrawerComponent } from './ui/drawer/drawer.component';
 
 @NgModule({
-  declarations: [HeaderComponent, DrawerComponent],
+  declarations: [],
   imports: [CommonModule, RouterModule, MaterialModule, CovalentModule, FlexLayoutModule],
-  exports: [MaterialModule, CovalentModule, HeaderComponent, DrawerComponent, FlexLayoutModule],
+  exports: [MaterialModule, CovalentModule, FlexLayoutModule],
 })
 export class SharedModule { }

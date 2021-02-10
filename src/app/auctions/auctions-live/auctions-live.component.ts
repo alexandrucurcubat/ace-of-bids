@@ -12,7 +12,6 @@ export class AuctionsLiveComponent implements OnInit {
   ];
   selectedOrderByOption = 'newest';
   gridView = true;
-  gridCols!: number;
 
   auctions = [
     {
@@ -69,27 +68,5 @@ export class AuctionsLiveComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    if (window.innerWidth < 460) {
-      this.gridCols = 1;
-    } else if (window.innerWidth >= 460 && window.innerWidth < 700) {
-      this.gridCols = 2;
-    } else if (window.innerWidth >= 700 && window.innerWidth < 1200) {
-      this.gridCols = 3;
-    } else {
-      this.gridCols = 4;
-    }
-  }
-
-  onResize(event: any): void {
-    if (event.target.innerWidth < 460) {
-      this.gridCols = 1;
-    } else if (event.target.innerWidth >= 460 && event.target.innerWidth < 700) {
-      this.gridCols = 2;
-    } else if (event.target.innerWidth >= 700 && event.target.innerWidth < 1200) {
-      this.gridCols = 3;
-    } else {
-      this.gridCols = 4;
-    }
-  }
+  ngOnInit(): void { }
 }
