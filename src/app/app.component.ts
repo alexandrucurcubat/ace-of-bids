@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
 import { TdDialogService } from '@covalent/core/dialogs';
@@ -15,6 +15,7 @@ import { LoadingService } from './shared/services/loading/loading.service';
 import { AuthService } from './auth/services/auth.service';
 import { User } from './shared/models/user';
 import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
+import * as Hammer from 'hammerjs';
 
 @Component({
   selector: 'ace-root',
@@ -30,8 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   loggedUser$!: Observable<User | null>;
   environment!: Environment;
 
-  opened = false;
-  fixedInViewport = true;
+  sidenavIsOpened = false;
 
   constructor(
     private themingService: ThemingService,
@@ -40,7 +40,16 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private loadingService: LoadingService,
     private matDialog: MatDialog,
-  ) { }
+    elementRef: ElementRef
+  ) {
+    const hammertime = new Hammer(elementRef.nativeElement, {});
+    hammertime.on('panright', () => {
+      this.onOpenSidenav();
+    });
+    hammertime.on('panleft', () => {
+      this.onCloseSidenav();
+    });
+  }
 
   ngOnInit(): void {
     this.themingSubscription = this.themingService.theme.subscribe(
@@ -73,16 +82,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onResize(event: any): void {
     if (event.target.innerWidth >= 600) {
-      this.opened = false;
+      this.sidenavIsOpened = false;
     }
   }
 
   onOpenSidenav(): void {
-    this.opened = true;
+    this.sidenavIsOpened = true;
   }
 
   onCloseSidenav(): void {
-    this.opened = false;
+    this.sidenavIsOpened = false;
   }
 
   onLogout(): void {

@@ -9,6 +9,7 @@
     clearIcon="clear"
     placeholder="Căutare licitații"
     [showUnderline]="true"
+    (search)="onCloseSidenav()"
   ></td-search-box>
   <span class="ml-auto">
     <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
@@ -67,10 +68,15 @@
 </mat-toolbar>
 <mat-sidenav-container
   class="main-sidenav-container"
-  (backdropClick)="opened = !opened"
+  (backdropClick)="onCloseSidenav()"
   (window:resize)="onResize($event)"
 >
-  <mat-sidenav #sidenav mode="over" [opened]="opened" [fixedInViewport]="true">
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="sidenavIsOpened"
+    [fixedInViewport]="true"
+  >
     <mat-selection-list [multiple]="false">
       <mat-list-option [matMenuTriggerFor]="auctionsSidenavMenu">
         <mat-icon mat-list-icon>monetization_on</mat-icon>
