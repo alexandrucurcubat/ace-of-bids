@@ -1,4 +1,4 @@
-<div class="flex flex-space-between">
+<div fxLayout="row" fxLayoutAlign="space-between">
   <div>
     <mat-form-field>
       <mat-label>Ordonează licitațiile</mat-label>
@@ -13,33 +13,87 @@
     </mat-form-field>
   </div>
   <div>
-    <mat-button-toggle-group
-      [(value)]="selectedViewOption"
-      #group="matButtonToggleGroup"
-    >
-      <mat-button-toggle value="list">
-        <mat-icon>view_headline</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="grid">
+    <mat-button-toggle-group [(value)]="gridView" #group="matButtonToggleGroup">
+      <mat-button-toggle [value]="true">
         <mat-icon>grid_view</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle [value]="false">
+        <mat-icon>view_headline</mat-icon>
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
 </div>
 <mat-divider></mat-divider>
-<div class="auctions-list" *ngIf="selectedViewOption === 'list'">
+<div class="auctions-grid" *ngIf="gridView">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      fxFlex="25%"
+      fxFlex.sm="33%"
+      fxFlex.xs="100%"
+      *ngFor="let auction of auctions"
+    >
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{ auction.title }}</mat-card-title>
+          <mat-card-subtitle *ngIf="auction.noReserve">
+            <span class="primary">Fără rezervă</span>
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="!auction.noReserve">
+            <span class="accent">Cu rezervă</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <img
+          mat-card-image
+          [src]="auction.imageUrl"
+          height="200px"
+          [alt]="auction.title"
+        />
+        <mat-card-content>
+          {{ auction.description }}
+        </mat-card-content>
+        <mat-card-actions>
+          <span *ngIf="auction.lastBid !== 0">
+            Ultima ofertă:
+            <span class="fw-500">
+              {{ auction.lastBid | currency: auction.currency }}
+            </span>
+          </span>
+          <span class="fw-500" *ngIf="auction.lastBid === 0">
+            Nu sunt oferte
+          </span>
+          <div>
+            Se închide în:
+            <span
+              [ngClass]="{
+                warn: auction.closesSoon,
+                live: !auction.closesSoon
+              }"
+            >
+              {{ auction.timeBeforeClose }}
+            </span>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div class="auctions-list" *ngIf="!gridView">
   <div>
     <mat-selection-list #auctionsList [multiple]="false">
       <div *ngFor="let auction of auctions">
         <mat-list-option role="auction">
-          <div class="flex">
+          <div fxLayout>
             <img
               [src]="auction.imageUrl"
               height="50px"
               width="50px"
               alt="auctionItem"
             />
-            <div class="auction-info w-100 flex flex-space-between">
+            <div
+              class="auction-info w-100"
+              fxLayout
+              fxLayoutAlign="space-between"
+            >
               <div>
                 <div class="auction-title" mat-line>{{ auction.title }}</div>
                 <div class="auction-description" mat-line>
@@ -98,4 +152,3 @@
     </mat-selection-list>
   </div>
 </div>
-<div *ngIf="selectedViewOption === 'grid'">grid</div>

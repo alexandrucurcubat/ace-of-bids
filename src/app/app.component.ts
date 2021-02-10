@@ -1,7 +1,8 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Observable, Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { TdDialogService } from '@covalent/core/dialogs';
+import { Observable, Subscription } from 'rxjs';
 
 import {
   Themes,
@@ -12,7 +13,9 @@ import { Environment } from './shared/models/environment';
 import { version } from '../../package.json';
 import { LoadingService } from './shared/services/loading/loading.service';
 import { AuthService } from './auth/services/auth.service';
-import { DrawerService } from './shared/ui/drawer/services/drawer.service';
+import { User } from './shared/models/user';
+import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
+import * as Hammer from 'hammerjs';
 
 @Component({
   selector: 'ace-root',
@@ -25,16 +28,28 @@ export class AppComponent implements OnInit, OnDestroy {
   ThemesEnum = Themes;
   themingSubscription = new Subscription();
   isLoading$!: Observable<boolean>;
+  loggedUser$!: Observable<User | null>;
   environment!: Environment;
 
+  sidenavIsOpened = false;
+
   constructor(
-    private drawerService: DrawerService,
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer,
-    private dialogService: TdDialogService,
+    private covalentDialogService: TdDialogService,
     private authService: AuthService,
-    private loadingService: LoadingService
-  ) {}
+    private loadingService: LoadingService,
+    private matDialog: MatDialog,
+    elementRef: ElementRef
+  ) {
+    const hammertime = new Hammer(elementRef.nativeElement, {});
+    hammertime.on('panright', () => {
+      this.onOpenSidenav();
+    });
+    hammertime.on('panleft', () => {
+      this.onCloseSidenav();
+    });
+  }
 
   ngOnInit(): void {
     this.themingSubscription = this.themingService.theme.subscribe(
@@ -45,11 +60,8 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     this.isLoading$ = this.loadingService.isLoading$;
     this.authService.autoLogin();
+    this.loggedUser$ = this.authService.loggedUser$;
     this.environment = environment;
-  }
-
-  toggleDrawer(): void {
-    this.drawerService.toggle();
   }
 
   onChangeTheme(theme: Themes): void {
@@ -57,11 +69,33 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onDEV(): void {
-    this.dialogService.openAlert({
+    this.covalentDialogService.openAlert({
       message: `Versiune aplicație: ${version}`,
       title: 'DEV',
       closeButton: 'OK',
     });
+  }
+
+  onOpenAuthDialog(): void {
+    this.matDialog.open(AuthDialogComponent);
+  }
+
+  onResize(event: any): void {
+    if (event.target.innerWidth >= 600) {
+      this.sidenavIsOpened = false;
+    }
+  }
+
+  onOpenSidenav(): void {
+    this.sidenavIsOpened = true;
+  }
+
+  onCloseSidenav(): void {
+    this.sidenavIsOpened = false;
+  }
+
+  onLogout(): void {
+    this.authService.logout();
   }
 
   private applyThemeOnOverlays(): void {

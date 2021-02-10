@@ -1,5 +1,5 @@
 <form
-  class="flex flex-column"
+  fxLayout="column"
   *ngIf="currentForm === FormType.LOGIN"
   [formGroup]="loginForm"
   (ngSubmit)="onLogin()"
@@ -40,7 +40,7 @@
   <a href="" (click)="onPasswordResetMode($event)">Ai uitat parola?</a>
 </form>
 <form
-  class="flex flex-column"
+  fxLayout="column"
   *ngIf="currentForm === FormType.REGISTRATION"
   [formGroup]="registrationForm"
   (ngSubmit)="onRegistration()"
@@ -105,7 +105,7 @@
   </button>
 </form>
 <form
-  class="flex flex-column"
+  fxLayout="column"
   *ngIf="currentForm === FormType.PASSWORD_RESET"
   [formGroup]="passwordResetForm"
   (ngSubmit)="onPasswordReset()"

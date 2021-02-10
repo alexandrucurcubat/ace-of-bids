@@ -2,34 +2,156 @@
   *ngIf="isLoading$ | async"
   mode="indeterminate"
 ></mat-progress-bar>
-<ace-header></ace-header>
-<ace-drawer></ace-drawer>
-<mat-drawer-container>
-  <mat-drawer-content>
-    <div class="flex flex-end mb-5">
-      <button mat-button *ngIf="!environment.production" (click)="onDEV()">
-        <mat-icon>architecture</mat-icon>
+<mat-toolbar class="mat-elevation-z3">
+  <div>Ace<span class="primary">of</span>Bids</div>
+  <td-search-box
+    backIcon="keyboard_arrow_right"
+    clearIcon="clear"
+    placeholder="Căutare licitații"
+    [showUnderline]="true"
+    (search)="onCloseSidenav()"
+  ></td-search-box>
+  <span class="ml-auto">
+    <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
+    <mat-menu #auctionsMenu="matMenu">
+      <button mat-menu-item routerLink="/auctions/live">
+        <mat-icon>sensors</mat-icon>
+        <span class="live">Live</span>
       </button>
-      <span>
+      <button mat-menu-item routerLink="/auctions/closed">
+        <mat-icon>gavel</mat-icon>
+        <span>Închise</span>
+      </button>
+    </mat-menu>
+    <button mat-button routerLink="/about">Despre noi</button>
+    <button
+      mat-button
+      color="primary"
+      (click)="onOpenAuthDialog()"
+      *ngIf="(loggedUser$ | async) === null"
+    >
+      Conectează-te
+    </button>
+    <button
+      mat-button
+      color="primary"
+      [matMenuTriggerFor]="accountMenu"
+      *ngIf="loggedUser$ | async"
+    >
+      Contul meu
+    </button>
+    <mat-menu #accountMenu="matMenu">
+      <button mat-menu-item routerLink="/account">
+        <mat-icon>person</mat-icon>
+        <span> {{ (loggedUser$ | async)?.username }}</span>
+      </button>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span class="warn">Deconectare</span>
+      </button>
+    </mat-menu>
+    <button
+      *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+      mat-icon-button
+      (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+    >
+      <mat-icon>brightness_4</mat-icon>
+    </button>
+    <button
+      *ngIf="themeClass === ThemesEnum.DARK_THEME"
+      mat-icon-button
+      (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+    >
+      <mat-icon class="accent">brightness_5</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+<mat-sidenav-container
+  class="main-sidenav-container"
+  (backdropClick)="onCloseSidenav()"
+  (window:resize)="onResize($event)"
+>
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="sidenavIsOpened"
+    [fixedInViewport]="true"
+  >
+    <mat-selection-list [multiple]="false">
+      <mat-list-option [matMenuTriggerFor]="auctionsSidenavMenu">
+        <mat-icon mat-list-icon>monetization_on</mat-icon>
+        Licitații
+      </mat-list-option>
+      <mat-menu #auctionsSidenavMenu="matMenu">
         <button
-          *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
-          mat-icon-button
-          (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+          mat-menu-item
+          (click)="onCloseSidenav()"
+          routerLink="/auctions/live"
         >
-          <mat-icon>brightness_4</mat-icon>
+          <mat-icon>sensors</mat-icon>
+          <span class="live">Live</span>
         </button>
         <button
-          *ngIf="themeClass === ThemesEnum.DARK_THEME"
-          mat-icon-button
-          (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+          mat-menu-item
+          (click)="onCloseSidenav()"
+          routerLink="/auctions/closed"
         >
-          <mat-icon class="accent">brightness_5</mat-icon>
+          <mat-icon>gavel</mat-icon>
+          <span>Închise</span>
         </button>
-      </span>
-    </div>
+      </mat-menu>
+      <mat-list-option (click)="onCloseSidenav()" routerLink="/about">
+        <mat-icon mat-list-icon>help</mat-icon>
+        Despre noi
+      </mat-list-option>
+      <mat-list-option
+        (click)="onCloseSidenav()"
+        (click)="onOpenAuthDialog()"
+        *ngIf="(loggedUser$ | async) === null"
+      >
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        Conectează-te
+      </mat-list-option>
+      <mat-list-option
+        [matMenuTriggerFor]="accountSidenavMenu"
+        *ngIf="loggedUser$ | async"
+      >
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        Contul meu
+      </mat-list-option>
+      <mat-menu #accountSidenavMenu="matMenu">
+        <button mat-menu-item (click)="onCloseSidenav()" routerLink="/account">
+          <mat-icon>person</mat-icon>
+          <span> {{ (loggedUser$ | async)?.username }}</span>
+        </button>
+        <button mat-menu-item (click)="onCloseSidenav()" (click)="onLogout()">
+          <mat-icon>power_settings_new</mat-icon>
+          <span class="warn">Deconectare</span>
+        </button>
+      </mat-menu>
+      <mat-list-option
+        *ngIf="themeClass === ThemesEnum.LIGHT_THEME"
+        (click)="onChangeTheme(ThemesEnum.DARK_THEME)"
+      >
+        <mat-icon mat-list-icon>brightness_4</mat-icon>
+        Mod noapte
+      </mat-list-option>
+      <mat-list-option
+        *ngIf="themeClass === ThemesEnum.DARK_THEME"
+        (click)="onChangeTheme(ThemesEnum.LIGHT_THEME)"
+      >
+        <mat-icon mat-list-icon>brightness_5</mat-icon>
+        Mod zi
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button mat-button *ngIf="!environment.production" (click)="onDEV()">
+      <mat-icon>architecture</mat-icon>
+    </button>
     <router-outlet></router-outlet>
-    <button id="drawer-btn" mat-fab color="primary" (click)="toggleDrawer()">
+    <button id="sidenav-btn" mat-fab color="primary" (click)="onOpenSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

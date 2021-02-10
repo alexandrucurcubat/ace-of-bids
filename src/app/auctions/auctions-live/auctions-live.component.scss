@@ -23,3 +23,17 @@
     }
   }
 }
+
+.auctions-grid {
+  margin-top: 8px;
+}
+
+mat-card {
+  img {
+    object-fit: cover;
+  }
+
+  :hover {
+    cursor: pointer;
+  }
+}

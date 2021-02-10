@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
-import { MaterialModule } from '../shared/ui/material/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [AuthDialogComponent],
@@ -13,7 +13,7 @@ import { MaterialModule } from '../shared/ui/material/material.module';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MaterialModule,
+    SharedModule
   ],
   exports: [AuthDialogComponent],
   providers: [
@@ -21,4 +21,4 @@ import { MaterialModule } from '../shared/ui/material/material.module';
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
   ],
 })
-export class AuthModule {}
+export class AuthModule { }
