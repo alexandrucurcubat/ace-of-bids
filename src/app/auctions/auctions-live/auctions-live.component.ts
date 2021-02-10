@@ -11,7 +11,8 @@ export class AuctionsLiveComponent implements OnInit {
     { value: 'oldest', option: 'Cele mai vechi' },
   ];
   selectedOrderByOption = 'newest';
-  selectedViewOption = 'list';
+  gridView = true;
+  gridCols!: number;
 
   auctions = [
     {
@@ -20,7 +21,7 @@ export class AuctionsLiveComponent implements OnInit {
       imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
       noReserve: false,
       currency: 'EUR',
-      lastBid: 1.00,
+      lastBid: 1.0,
       timeBeforeClose: '5h 42m 33s',
       closesSoon: false,
     },
@@ -30,7 +31,7 @@ export class AuctionsLiveComponent implements OnInit {
       imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
       noReserve: true,
       currency: 'USD',
-      lastBid: 0.00,
+      lastBid: 0.0,
       timeBeforeClose: '1z',
       closesSoon: false,
     },
@@ -40,7 +41,7 @@ export class AuctionsLiveComponent implements OnInit {
       imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
       noReserve: true,
       currency: 'EUR',
-      lastBid: 3.00,
+      lastBid: 3.0,
       timeBeforeClose: '1h 42m 33s',
       closesSoon: true,
     },
@@ -50,7 +51,7 @@ export class AuctionsLiveComponent implements OnInit {
       imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
       noReserve: false,
       currency: 'EUR',
-      lastBid: 4.00,
+      lastBid: 4.0,
       timeBeforeClose: '42m 33s',
       closesSoon: true,
     },
@@ -60,13 +61,35 @@ export class AuctionsLiveComponent implements OnInit {
       imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
       noReserve: true,
       currency: 'RON',
-      lastBid: 5.00,
+      lastBid: 5.0,
       timeBeforeClose: '3z',
       closesSoon: false,
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.innerWidth < 460) {
+      this.gridCols = 1;
+    } else if (window.innerWidth >= 460 && window.innerWidth < 700) {
+      this.gridCols = 2;
+    } else if (window.innerWidth >= 700 && window.innerWidth < 1200) {
+      this.gridCols = 3;
+    } else {
+      this.gridCols = 4;
+    }
+  }
+
+  onResize(event: any): void {
+    if (event.target.innerWidth < 460) {
+      this.gridCols = 1;
+    } else if (event.target.innerWidth >= 460 && event.target.innerWidth < 700) {
+      this.gridCols = 2;
+    } else if (event.target.innerWidth >= 700 && event.target.innerWidth < 1200) {
+      this.gridCols = 3;
+    } else {
+      this.gridCols = 4;
+    }
+  }
 }

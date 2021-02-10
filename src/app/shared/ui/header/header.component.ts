@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private themingService: ThemingService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loggedUser$ = this.authService.loggedUser$;
@@ -33,8 +33,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onOpenAuthDialog(): void {
-    const authDialog = this.dialog.open(AuthDialogComponent);
-    authDialog.updatePosition({ top: '100px' });
+    this.dialog.open(AuthDialogComponent);
   }
 
   onChangeTheme(theme: Themes): void {
