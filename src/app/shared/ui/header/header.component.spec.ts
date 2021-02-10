@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthModule } from 'src/app/auth/auth.module';
@@ -12,7 +13,7 @@ describe('HeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      imports: [MaterialModule, AuthModule, RouterTestingModule],
+      imports: [MaterialModule, BrowserAnimationsModule, AuthModule, RouterTestingModule],
     }).compileComponents();
   });
 
