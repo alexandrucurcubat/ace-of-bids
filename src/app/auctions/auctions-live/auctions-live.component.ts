@@ -18,7 +18,7 @@ export class AuctionsLiveComponent implements OnInit {
     {
       title: 'Licitația 1',
       description: 'Descriere 1',
-      imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
+      imageUrl: 'favicon.ico',
       noReserve: false,
       currency: 'EUR',
       lastBid: 1.0,
@@ -28,7 +28,7 @@ export class AuctionsLiveComponent implements OnInit {
     {
       title: 'Licitația 2',
       description: 'Descriere 2',
-      imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
+      imageUrl: 'favicon.ico',
       noReserve: true,
       currency: 'USD',
       lastBid: 0.0,
@@ -38,7 +38,7 @@ export class AuctionsLiveComponent implements OnInit {
     {
       title: 'Licitația 3',
       description: 'Descriere 3',
-      imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
+      imageUrl: 'favicon.ico',
       noReserve: true,
       currency: 'EUR',
       lastBid: 3.0,
@@ -48,7 +48,7 @@ export class AuctionsLiveComponent implements OnInit {
     {
       title: 'Licitația 4',
       description: 'Descriere 4',
-      imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
+      imageUrl: 'favicon.ico',
       noReserve: false,
       currency: 'EUR',
       lastBid: 4.0,
@@ -58,7 +58,7 @@ export class AuctionsLiveComponent implements OnInit {
     {
       title: 'Licitația 5',
       description: 'Descriere 5',
-      imageUrl: 'https://lezebre.lu/images/detailed/17/30527-Alfa-Romeo.png',
+      imageUrl: 'favicon.ico',
       noReserve: true,
       currency: 'RON',
       lastBid: 5.0,

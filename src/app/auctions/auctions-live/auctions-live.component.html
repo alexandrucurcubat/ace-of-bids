@@ -1,4 +1,4 @@
-<div class="flex flex-space-between">
+<div fxLayout="row" fxLayoutAlign="space-between">
   <div>
     <mat-form-field>
       <mat-label>Ordonează licitațiile</mat-label>
@@ -25,13 +25,13 @@
 </div>
 <mat-divider></mat-divider>
 <div class="auctions-grid" *ngIf="gridView">
-  <mat-grid-list
-    [cols]="gridCols"
-    rowHeight="390px"
-    gutterSize="16px"
-    (window:resize)="onResize($event)"
-  >
-    <mat-grid-tile *ngFor="let auction of auctions">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      fxFlex="25%"
+      fxFlex.sm="33%"
+      fxFlex.xs="100%"
+      *ngFor="let auction of auctions"
+    >
       <mat-card class="example-card">
         <mat-card-header>
           <mat-card-title>{{ auction.title }}</mat-card-title>
@@ -74,22 +74,26 @@
           </div>
         </mat-card-actions>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>
 <div class="auctions-list" *ngIf="!gridView">
   <div>
     <mat-selection-list #auctionsList [multiple]="false">
       <div *ngFor="let auction of auctions">
         <mat-list-option role="auction">
-          <div class="flex">
+          <div fxLayout>
             <img
               [src]="auction.imageUrl"
               height="50px"
               width="50px"
               alt="auctionItem"
             />
-            <div class="auction-info w-100 flex flex-space-between">
+            <div
+              class="auction-info w-100"
+              fxLayout
+              fxLayoutAlign="space-between"
+            >
               <div>
                 <div class="auction-title" mat-line>{{ auction.title }}</div>
                 <div class="auction-description" mat-line>
