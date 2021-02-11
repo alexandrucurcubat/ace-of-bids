@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
 import { TdDialogService } from '@covalent/core/dialogs';
@@ -44,7 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     const hammertime = new Hammer(elementRef.nativeElement, {});
     hammertime.on('panright', () => {
-      this.onOpenSidenav();
+      if (window.innerWidth < 600) {
+        this.onOpenSidenav();
+      }
     });
     hammertime.on('panleft', () => {
       this.onCloseSidenav();

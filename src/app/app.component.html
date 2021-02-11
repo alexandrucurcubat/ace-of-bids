@@ -14,11 +14,19 @@
   <span class="ml-auto">
     <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
     <mat-menu #auctionsMenu="matMenu">
-      <button mat-menu-item routerLink="/auctions/live">
+      <button
+        mat-menu-item
+        routerLink="/auctions"
+        [queryParams]="{ status: 'live' }"
+      >
         <mat-icon>sensors</mat-icon>
         <span class="live">Live</span>
       </button>
-      <button mat-menu-item routerLink="/auctions/closed">
+      <button
+        mat-menu-item
+        routerLink="/auctions"
+        [queryParams]="{ status: 'closed' }"
+      >
         <mat-icon>gavel</mat-icon>
         <span>Închise</span>
       </button>
@@ -86,7 +94,8 @@
         <button
           mat-menu-item
           (click)="onCloseSidenav()"
-          routerLink="/auctions/live"
+          routerLink="/auctions"
+          [queryParams]="{ status: 'live' }"
         >
           <mat-icon>sensors</mat-icon>
           <span class="live">Live</span>
@@ -94,7 +103,8 @@
         <button
           mat-menu-item
           (click)="onCloseSidenav()"
-          routerLink="/auctions/closed"
+          routerLink="/auctions"
+          [queryParams]="{ status: 'closed' }"
         >
           <mat-icon>gavel</mat-icon>
           <span>Închise</span>
@@ -146,9 +156,11 @@
     </mat-selection-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <button mat-button *ngIf="!environment.production" (click)="onDEV()">
-      <mat-icon>architecture</mat-icon>
-    </button>
+    <div fxLayout fxLayoutAlign="center">
+      <button mat-button *ngIf="!environment.production" (click)="onDEV()">
+        <mat-icon>architecture</mat-icon>
+      </button>
+    </div>
     <router-outlet></router-outlet>
     <button id="sidenav-btn" mat-fab color="primary" (click)="onOpenSidenav()">
       <mat-icon>menu</mat-icon>
