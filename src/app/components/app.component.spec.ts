@@ -3,8 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-import { SharedModule } from './shared/shared.module';
+import { AuthModule } from '../auth/auth.module';
+import { SharedModule } from '../shared/shared.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

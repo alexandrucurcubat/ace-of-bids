@@ -20,7 +20,7 @@ export class AuctionsService {
       noReserve: false,
       currency: AuctionCurrency.EUR,
       lastBid: 1.0,
-      timeBeforeClose: 18000,
+      timeBeforeClose: 118123,
       sold: false,
       bids: [],
       openTimestamp: new Date(),

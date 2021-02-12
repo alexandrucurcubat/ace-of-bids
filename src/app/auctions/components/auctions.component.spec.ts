@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { SecondsToDhmsPipe } from '../pipes/seconds-to-dhms.pipe';
 import { AuctionsComponent } from './auctions.component';
 
 describe('AuctionsComponent', () => {
@@ -12,7 +13,7 @@ describe('AuctionsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, SharedModule, BrowserAnimationsModule],
-      declarations: [AuctionsComponent],
+      declarations: [AuctionsComponent, SecondsToDhmsPipe],
     }).compileComponents();
   });
 

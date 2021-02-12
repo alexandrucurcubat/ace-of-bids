@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Auction } from './models/auction';
+import { Auction } from '../models/auction';
 import {
   AuctionsView,
   AuctionFilterOptions,
   AuctionStatus,
-} from './models/auctions.enums';
-import { AuctionsService } from './services/auctions.service';
+} from '../models/auctions.enums';
+import { AuctionsService } from '../services/auctions.service';
 
 @Component({
   selector: 'ace-auctions',
