@@ -23,7 +23,7 @@ import { environment } from '../environments/environment';
     AuctionsModule,
     AuthModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production || environment.development,
+      enabled: environment.production,
     }),
   ],
   bootstrap: [AppComponent],
