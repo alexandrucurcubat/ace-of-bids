@@ -7,30 +7,8 @@ mat-form-field {
   padding: 18px 0 20px 0;
 }
 
-.auction-details {
-  line-height: 120%;
+.auction-li {
   padding-left: 16px;
-
-  .auction-description {
-    display: block;
-    @media screen and (max-width: 599px) {
-      display: none;
-    }
-  }
-
-  .last-bid {
-    display: none;
-    @media screen and (min-width: 600px) {
-      display: block;
-    }
-  }
-
-  .last-bid-small {
-    display: none;
-    @media screen and (max-width: 599px) {
-      display: block;
-    }
-  }
 }
 
 .auctions-grid {

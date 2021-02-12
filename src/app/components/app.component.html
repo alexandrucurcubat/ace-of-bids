@@ -156,14 +156,10 @@
     </mat-selection-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <!-- <div fxLayout fxLayoutAlign="center">
-      <button mat-button *ngIf="!environment.production" (click)="onDEV()">
-        <mat-icon>architecture</mat-icon>
-      </button>
-    </div> -->
     <router-outlet></router-outlet>
     <button id="sidenav-btn" mat-fab color="primary" (click)="onOpenSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
+    <footer>Ace of Bids &copy; {{ currentYear }}</footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

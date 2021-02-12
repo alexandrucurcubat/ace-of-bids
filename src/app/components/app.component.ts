@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
-import { TdDialogService } from '@covalent/core/dialogs';
 import { Observable, Subscription } from 'rxjs';
 import * as Hammer from 'hammerjs';
-import { version } from 'package.json';
 
 import {
   Themes,
@@ -35,13 +33,12 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoading$!: Observable<boolean>;
   loggedUser$!: Observable<User | null>;
   environment!: Environment;
-
   sidenavIsOpened = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer,
-    private covalentDialogService: TdDialogService,
     private authService: AuthService,
     private loadingService: LoadingService,
     private matDialog: MatDialog,
@@ -73,14 +70,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onChangeTheme(theme: Themes): void {
     this.themingService.changeTheme(theme);
-  }
-
-  onDEV(): void {
-    this.covalentDialogService.openAlert({
-      message: `Versiune aplicație: ${version}`,
-      title: 'DEV',
-      closeButton: 'OK',
-    });
   }
 
   onOpenAuthDialog(): void {

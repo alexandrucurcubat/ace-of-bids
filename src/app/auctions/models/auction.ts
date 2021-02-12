@@ -3,18 +3,18 @@ import { AuctionStatus, AuctionCurrency } from './auctions.enums';
 
 export interface Auction {
   id: number;
-  status: AuctionStatus;
   title: string;
   description: string;
-  imageUrl?: string;
-  noReserve: boolean;
+  images: string[];
+  reserve?: number;
   currency: AuctionCurrency;
-  lastBid?: number;
-  timeBeforeClose: number;
-  sold: boolean;
-  bids: Bid[];
+  status: AuctionStatus;
   openTimestamp: Date;
   closeTimestamp?: Date;
+  timeBeforeClose: number;
+  bids: Bid[];
+  lastBid?: number;
+  sold: boolean;
 }
 
 export interface Bid {
