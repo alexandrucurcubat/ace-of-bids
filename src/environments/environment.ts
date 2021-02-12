@@ -6,6 +6,7 @@ import { Environment } from 'src/app/shared/models/environment';
 
 export const environment: Environment = {
   apiUrl: 'http://localhost:3000/api',
+  development: false,
   production: false,
 };
 

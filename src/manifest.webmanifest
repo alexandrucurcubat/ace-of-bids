@@ -1,8 +1,8 @@
 {
-  "name": "ace-of-bids",
-  "short_name": "ace-of-bids",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Ace of Bids",
+  "short_name": "Ace of Bids",
+  "theme_color": "#303030",
+  "background_color": "#303030",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
