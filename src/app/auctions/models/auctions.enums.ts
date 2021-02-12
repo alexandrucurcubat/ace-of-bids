@@ -3,10 +3,10 @@ export enum AuctionsView {
   LIST = 'list',
 }
 
-export enum AuctionFilterOptions {
+export enum AuctionsFilterBy {
   ENDING_SOON = 'endingSoon',
   NEWLY_LISTED = 'newlyListed',
-  NO_RESERVE = 'no_reserve',
+  NO_RESERVE = 'noReserve',
 }
 
 export enum AuctionStatus {

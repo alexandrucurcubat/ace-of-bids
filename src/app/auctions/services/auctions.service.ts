@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Auction } from '../models/auction';
 import {
   AuctionCurrency,
+  AuctionsFilterBy,
   AuctionStatus,
   AuctionsView,
 } from '../models/auctions.enums';
@@ -114,13 +115,68 @@ export class AuctionsService {
     },
   ];
 
-  constructor() {}
-
-  getAuctions(status: string): Observable<any[]> {
-    if (!status) {
-      status = AuctionStatus.LIVE;
+  getAuctions(
+    status: AuctionStatus,
+    filterBy?: AuctionsFilterBy
+  ): Observable<any[]> {
+    if (status === AuctionStatus.CLOSED) {
+      return of(this.getClosedAuctions());
+    } else {
+      switch (filterBy) {
+        case AuctionsFilterBy.ENDING_SOON:
+          return of(this.getEndingSoonAuctions());
+        case AuctionsFilterBy.NEWLY_LISTED:
+          return of(this.getNewlyListedAuctions());
+        case AuctionsFilterBy.NO_RESERVE:
+          return of(this.getNoReserveAuctions());
+        default:
+          return of(this.getLiveAuctions());
+      }
     }
-    return of(this.auctions.filter((auction) => auction.status === status));
+  }
+
+  private getLiveAuctions(): Auction[] {
+    return this.auctions.filter(
+      (auction) => auction.status === AuctionStatus.LIVE
+    );
+  }
+
+  private getEndingSoonAuctions(): Auction[] {
+    return this.sortByEndingSoon(this.auctions).filter(
+      (auction) => auction.status === AuctionStatus.LIVE
+    );
+  }
+
+  private getNewlyListedAuctions(): Auction[] {
+    return this.sortByNewlyListed(this.auctions).filter(
+      (auction) => auction.status === AuctionStatus.LIVE
+    );
+  }
+
+  private getClosedAuctions(): Auction[] {
+    return this.sortByNewlyListed(this.auctions).filter(
+      (auction) => auction.status === AuctionStatus.CLOSED
+    );
+  }
+
+  private getNoReserveAuctions(): Auction[] {
+    return this.sortByEndingSoon(this.auctions).filter(
+      (auction) => auction.status === AuctionStatus.LIVE && !auction.reserve
+    );
+  }
+
+  private sortByEndingSoon(auctions: Auction[]): Auction[] {
+    return auctions.sort((a, b) =>
+      a.timeBeforeClose > b.timeBeforeClose
+        ? 1
+        : b.timeBeforeClose > a.timeBeforeClose
+        ? -1
+        : 0
+    );
+  }
+
+  private sortByNewlyListed(auctions: Auction[]): Auction[] {
+    return auctions.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
   }
 
   getAuctionsView(): AuctionsView {

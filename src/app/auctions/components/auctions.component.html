@@ -2,12 +2,15 @@
   <div *ngIf="auctionsStatus !== AUCTIONS_STATUS.CLOSED">
     <mat-form-field>
       <mat-label class="live"><mat-icon>sensors</mat-icon> Live</mat-label>
-      <mat-select [(value)]="selectedFilterOption">
+      <mat-select
+        [(value)]="filterBy"
+        (selectionChange)="onFilterSelect($event)"
+      >
         <mat-option
-          *ngFor="let orderBy of filterOptions"
-          [value]="orderBy.value"
+          *ngFor="let filterBy of filterByOptions"
+          [value]="filterBy.value"
         >
-          {{ orderBy.option }}
+          {{ filterBy.option }}
         </mat-option>
       </mat-select>
     </mat-form-field>
