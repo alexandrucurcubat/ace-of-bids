@@ -31,8 +31,8 @@ mat-sidenav-container {
     min-height: calc(100vh - 96px);
     padding: 80px 16px 16px 16px;
     @media screen and (max-width: 599px) {
-    min-height: calc(100vh - 91px);
-    padding-top: 75px;
+      min-height: calc(100vh - 91px);
+      padding-top: 75px;
     }
 
     #sidenav-btn {
@@ -42,6 +42,10 @@ mat-sidenav-container {
       @media screen and (min-width: 600px) {
         display: none;
       }
+    }
+
+    footer {
+      padding-top: 50px;
     }
   }
 }

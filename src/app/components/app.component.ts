@@ -7,21 +7,18 @@ import {
 } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { MatDialog } from '@angular/material/dialog';
-import { TdDialogService } from '@covalent/core/dialogs';
 import { Observable, Subscription } from 'rxjs';
+import * as Hammer from 'hammerjs';
 
 import {
   Themes,
   ThemingService,
-} from './shared/ui/theming/services/theming.service';
-import { environment } from 'src/environments/environment';
-import { Environment } from './shared/models/environment';
-import { version } from '../../package.json';
-import { LoadingService } from './shared/services/loading/loading.service';
-import { AuthService } from './auth/services/auth.service';
-import { User } from './shared/models/user';
-import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
-import * as Hammer from 'hammerjs';
+} from '../shared/ui/theming/services/theming.service';
+import { User } from '../shared/models/user';
+import { Environment } from '../shared/models/environment';
+import { AuthService } from '../auth/services/auth.service';
+import { LoadingService } from '../shared/services/loading/loading.service';
+import { AuthDialogComponent } from '../auth/components/auth-dialog/auth-dialog.component';
 
 @Component({
   selector: 'ace-root',
@@ -36,13 +33,12 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoading$!: Observable<boolean>;
   loggedUser$!: Observable<User | null>;
   environment!: Environment;
-
   sidenavIsOpened = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
     private themingService: ThemingService,
     private overlayContainer: OverlayContainer,
-    private covalentDialogService: TdDialogService,
     private authService: AuthService,
     private loadingService: LoadingService,
     private matDialog: MatDialog,
@@ -69,19 +65,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isLoading$ = this.loadingService.isLoading$;
     this.authService.autoLogin();
     this.loggedUser$ = this.authService.loggedUser$;
-    this.environment = environment;
+    this.environment = this.environment;
   }
 
   onChangeTheme(theme: Themes): void {
     this.themingService.changeTheme(theme);
-  }
-
-  onDEV(): void {
-    this.covalentDialogService.openAlert({
-      message: `Versiune aplicație: ${version}`,
-      title: 'DEV',
-      closeButton: 'OK',
-    });
   }
 
   onOpenAuthDialog(): void {

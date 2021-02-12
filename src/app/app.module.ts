@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app.component';
 import { SharedModule } from './shared/shared.module';
 import { LoadingInterceptor } from './core/loading.interceptor';
 import { JwtInterceptor } from './core/jwt.interceptor';

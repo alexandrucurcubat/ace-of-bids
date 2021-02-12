@@ -13,9 +13,9 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
-import { AuthService } from '../services/auth.service';
-import { AuthFormType } from '../models/auth-form-type';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
+import { AuthFormType } from '../../models/auth-form-type';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'ace-auth-dialog',

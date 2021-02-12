@@ -10,11 +10,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { AuthService } from '../auth/services/auth.service';
-import { User } from '../shared/models/user';
-import { LoadingService } from '../shared/services/loading/loading.service';
-import { PasswordData, UsernameData } from './models/account-form-data';
-import { AccountService } from './services/account.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/shared/models/user';
+import { LoadingService } from 'src/app/shared/services/loading/loading.service';
+import { PasswordData, UsernameData } from '../models/account-form-data';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'ace-account',
