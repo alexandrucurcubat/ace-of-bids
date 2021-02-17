@@ -106,70 +106,75 @@
   <div>
     <mat-selection-list #auctionsList [multiple]="false">
       <div *ngFor="let auction of auctions$ | async">
-        <mat-list-option role="auction">
-          <div fxLayout>
-            <img
-              [src]="auction.images[0]"
-              [alt]="auction.title"
-              height="50px"
-              width="50px"
-            />
-            <div
-              class="auction-li w-100"
-              fxLayout="column"
-              fxLayout.gt-xs="row"
-              fxLayoutAlign="space-between"
-            >
-              <div class="mb-5">
-                <div class="mb-5" mat-line>
-                  {{ auction.title }}
+        <a [routerLink]="['/auctions/', auction.id]">
+          <mat-list-option role="auction">
+            <div fxLayout>
+              <img
+                [src]="auction.images[0]"
+                [alt]="auction.title"
+                height="50px"
+                width="50px"
+              />
+              <div
+                class="auction-li w-100"
+                fxLayout="column"
+                fxLayout.gt-xs="row"
+                fxLayoutAlign="space-between"
+              >
+                <div class="mb-5">
+                  <div class="mb-5" mat-line>
+                    {{ auction.title }}
+                  </div>
+                  <div mat-line>
+                    {{ auction.description }}
+                  </div>
+                  <div mat-line class="primary" *ngIf="!auction.reserve">
+                    Fără rezervă
+                  </div>
+                  <div mat-line *ngIf="auction.reserve">Cu rezervă</div>
                 </div>
-                <div mat-line>
-                  {{ auction.description }}
-                </div>
-                <div mat-line class="primary" *ngIf="!auction.reserve">
-                  Fără rezervă
-                </div>
-                <div mat-line *ngIf="auction.reserve">Cu rezervă</div>
-              </div>
-              <div class="text-end">
-                <div mat-line *ngIf="auction.status === AUCTIONS_STATUS.LIVE">
-                  <div mat-line class="mb-5">
-                    <span *ngIf="auction.lastBid !== 0">
-                      Ultima ofertă:
+                <div class="text-end">
+                  <div mat-line *ngIf="auction.status === AUCTIONS_STATUS.LIVE">
+                    <div mat-line class="mb-5">
+                      <span *ngIf="auction.lastBid !== 0">
+                        Ultima ofertă:
+                        <span class="fw-500">
+                          {{ auction.lastBid | currency: auction.currency }}
+                        </span>
+                      </span>
+                      <span class="fw-500" *ngIf="auction.lastBid === 0">
+                        Nu sunt oferte
+                      </span>
+                    </div>
+                    <div>
+                      Închide în:
+                      <span
+                        [ngClass]="{
+                          warn: auction.timeBeforeClose < 10800,
+                          live: auction.timeBeforeClose >= 10800
+                        }"
+                      >
+                        {{ auction.timeBeforeClose | secondsToDhms }}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    mat-line
+                    *ngIf="auction.status === AUCTIONS_STATUS.CLOSED"
+                  >
+                    <div *ngIf="auction.sold">
+                      S-a vândut cu
                       <span class="fw-500">
                         {{ auction.lastBid | currency: auction.currency }}
                       </span>
-                    </span>
-                    <span class="fw-500" *ngIf="auction.lastBid === 0">
-                      Nu sunt oferte
-                    </span>
+                    </div>
+                    <div *ngIf="!auction.sold">Nu s-a vândut</div>
                   </div>
-                  <div>
-                    Închide în:
-                    <span
-                      [ngClass]="{
-                        warn: auction.timeBeforeClose < 10800,
-                        live: auction.timeBeforeClose >= 10800
-                      }"
-                    >
-                      {{ auction.timeBeforeClose | secondsToDhms }}
-                    </span>
-                  </div>
-                </div>
-                <div mat-line *ngIf="auction.status === AUCTIONS_STATUS.CLOSED">
-                  <div *ngIf="auction.sold">
-                    S-a vândut cu
-                    <span class="fw-500">
-                      {{ auction.lastBid | currency: auction.currency }}
-                    </span>
-                  </div>
-                  <div *ngIf="!auction.sold">Nu s-a vândut</div>
                 </div>
               </div>
             </div>
-          </div>
-        </mat-list-option>
+          </mat-list-option>
+        </a>
         <mat-divider></mat-divider>
       </div>
     </mat-selection-list>
