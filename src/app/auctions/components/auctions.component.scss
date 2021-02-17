@@ -2,6 +2,10 @@ mat-form-field {
   font-size: 125%;
 }
 
+a {
+  text-decoration: none;
+}
+
 .header-closed {
   margin-bottom: 0;
   padding: 18px 0 20px 0;
@@ -13,11 +17,6 @@ mat-form-field {
 
 .auctions-grid {
   margin-top: 8px;
-
-  a {
-    text-decoration: none;
-  }
-
   mat-card {
     img {
       object-fit: cover;
