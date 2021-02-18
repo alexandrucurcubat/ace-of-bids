@@ -7,13 +7,13 @@ import {
   Router,
   CanLoad,
   UrlSegment,
+  Route,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth.service';
 import { User } from 'src/app/shared/models/user';
-import { Route } from '@angular/compiler/src/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanLoad {
