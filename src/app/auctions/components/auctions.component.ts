@@ -43,6 +43,7 @@ export class AuctionsComponent implements OnInit {
       );
     });
     this.auctionsView = this.auctionsService.getAuctionsView();
+    this.auctionsService.simulateCloseTime();
   }
 
   onSetGridView(): void {

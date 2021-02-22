@@ -22,7 +22,7 @@ export class AuctionsService {
       status: AuctionStatus.LIVE,
       openTimestamp: new Date(),
       closeTimestamp: new Date(),
-      timeBeforeClose: 18123,
+      timeBeforeClose: 10,
       bids: [],
       lastBid: 1.0,
       sold: false,
@@ -114,6 +114,16 @@ export class AuctionsService {
       sold: false,
     },
   ];
+
+  simulateCloseTime(): void {
+    setInterval(() => {
+      this.auctions.map((auction: Auction) =>
+        auction.timeBeforeClose !== 0
+          ? auction.timeBeforeClose--
+          : (auction.status = AuctionStatus.CLOSED)
+      );
+    }, 1000);
+  }
 
   getAuctions(
     status: AuctionStatus,
