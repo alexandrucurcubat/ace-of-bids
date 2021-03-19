@@ -1,5 +1,5 @@
 export interface UsernameData {
-  oldPassword: string;
+  password: string;
   username: string;
 }
 

@@ -85,7 +85,7 @@ export class AccountComponent implements OnInit {
     if (this.accountForm.valid) {
       const id = this.loggedUser.id;
       const usernameData: UsernameData = {
-        oldPassword: this.oldPassword?.value,
+        password: this.oldPassword?.value,
         username: this.username?.value,
       };
       this.accountService

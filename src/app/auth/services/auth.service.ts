@@ -13,7 +13,7 @@ import {
 } from '../models/auth-form-data';
 import { User } from 'src/app/shared/models/user';
 import { LOCAL_STORAGE } from 'src/app/shared/models/local-storage';
-import { AuthJwt } from '../models/auth-jwt';
+import { JwtResponse } from '../models/jwt-response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,12 +27,12 @@ export class AuthService {
     private router: Router
   ) {}
 
-  login(loginData: LoginData): Observable<AuthJwt> {
+  login(loginData: LoginData): Observable<JwtResponse> {
     return this.http
-      .post<AuthJwt>(`${environment.apiUrl}/auth/login`, loginData)
+      .post<JwtResponse>(`${environment.apiUrl}/auth/login`, loginData)
       .pipe(
-        tap((authJwt: AuthJwt) => {
-          const jwt = authJwt.jwt;
+        tap((jwtResponse: JwtResponse) => {
+          const jwt = jwtResponse.jwt;
           const expirationDate = this.jwtHelper.getTokenExpirationDate(jwt);
           if (expirationDate) {
             this.setJwtTimer(expirationDate.toISOString());
