@@ -8,11 +8,6 @@ mat-toolbar {
   position: fixed;
   z-index: 2;
 
-  td-search-box {
-    flex: 1;
-    font-size: 75%;
-  }
-
   @media screen and (max-width: 599px) {
     button {
       display: none;

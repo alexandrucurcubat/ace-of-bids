@@ -27,6 +27,8 @@ $dark-theme: mat-dark-theme(
   )
 );
 
+$mat-theme-ignore-duplication-warnings: true;
+
 .light-theme {
   @include angular-material-theme($light-theme);
 }

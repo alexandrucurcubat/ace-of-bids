@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about/components/about.component';
+import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { AuctionsComponent } from './auctions/components/auctions.component';
+import { AuctionsComponent } from './auctions/auctions.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auctions', pathMatch: 'full' },
