@@ -4,13 +4,6 @@
 ></mat-progress-bar>
 <mat-toolbar class="mat-elevation-z3">
   <div>Ace<span class="primary">of</span>Bids</div>
-  <td-search-box
-    backIcon="keyboard_arrow_right"
-    clearIcon="clear"
-    placeholder="Căutare licitații"
-    [showUnderline]="true"
-    (search)="onCloseSidenav()"
-  ></td-search-box>
   <span class="ml-auto">
     <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
     <mat-menu #auctionsMenu="matMenu">
@@ -160,6 +153,6 @@
     <button id="sidenav-btn" mat-fab color="primary" (click)="onOpenSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-    <footer>Ace of Bids &copy; {{ currentYear }}</footer>
+    <footer class="text-center">Ace of Bids &copy; {{ currentYear }}</footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

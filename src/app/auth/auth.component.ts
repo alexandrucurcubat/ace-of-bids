@@ -14,15 +14,15 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { AuthFormType } from '../../models/auth-form-type';
-import { AuthService } from '../../services/auth.service';
+import { AuthFormType } from './models/auth-form-type';
+import { AuthService } from './services/auth.service';
 
 @Component({
-  selector: 'ace-auth-dialog',
-  templateUrl: './auth-dialog.component.html',
-  styleUrls: ['./auth-dialog.component.scss'],
+  selector: 'ace-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss'],
 })
-export class AuthDialogComponent implements OnInit, OnDestroy {
+export class AuthComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   FormType = AuthFormType;
   currentForm = AuthFormType.LOGIN;
@@ -34,7 +34,7 @@ export class AuthDialogComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private dialogRef: MatDialogRef<AuthDialogComponent>,
+    private dialogRef: MatDialogRef<AuthComponent>,
     private snackbar: MatSnackBar,
     private loadingService: LoadingService,
     private router: Router

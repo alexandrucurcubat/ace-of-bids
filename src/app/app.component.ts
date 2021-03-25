@@ -13,12 +13,12 @@ import * as Hammer from 'hammerjs';
 import {
   Themes,
   ThemingService,
-} from '../shared/ui/theming/services/theming.service';
-import { User } from '../shared/models/user';
-import { Environment } from '../shared/models/environment';
-import { AuthService } from '../auth/services/auth.service';
-import { LoadingService } from '../shared/services/loading/loading.service';
-import { AuthDialogComponent } from '../auth/components/auth-dialog/auth-dialog.component';
+} from './shared/ui/theming/services/theming.service';
+import { User } from './shared/models/user';
+import { Environment } from './shared/models/environment';
+import { AuthService } from './auth/services/auth.service';
+import { LoadingService } from './shared/services/loading/loading.service';
+import { AuthComponent } from './auth/auth.component';
 
 @Component({
   selector: 'ace-root',
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onOpenAuthDialog(): void {
-    this.matDialog.open(AuthDialogComponent);
+    this.matDialog.open(AuthComponent);
   }
 
   onResize(event: any): void {

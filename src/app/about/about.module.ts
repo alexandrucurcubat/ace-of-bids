@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AboutComponent } from './components/about.component';
+import { AboutComponent } from './about.component';
 
 @NgModule({
   declarations: [AboutComponent],

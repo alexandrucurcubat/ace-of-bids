@@ -13,8 +13,8 @@ import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/shared/models/user';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { PasswordData, UsernameData } from '../models/account-form-data';
-import { AccountService } from '../services/account.service';
+import { PasswordData, UsernameData } from './models/account-form-data';
+import { AccountService } from './services/account.service';
 
 @Component({
   selector: 'ace-account',

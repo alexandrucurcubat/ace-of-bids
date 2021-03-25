@@ -7,9 +7,9 @@ import {
   AuctionsView,
   AuctionsFilterBy,
   AuctionStatus,
-} from '../models/auctions.enums';
-import { Auction } from '../models/auction';
-import { AuctionsService } from '../services/auctions.service';
+} from './models/auctions.enums';
+import { Auction } from './models/auction';
+import { AuctionsService } from './services/auctions.service';
 
 @Component({
   selector: 'ace-auctions',
