@@ -30,22 +30,19 @@
   <mat-list-option
     (click)="onCloseSidenav()"
     (click)="onOpenAuthDialog()"
-    *ngIf="(loggedUser$ | async) === null"
+    *ngIf="loggedUser === null"
   >
     <mat-icon mat-list-icon>account_circle</mat-icon>
     Conectează-te
   </mat-list-option>
-  <mat-list-option
-    [matMenuTriggerFor]="accountSidenavMenu"
-    *ngIf="loggedUser$ | async"
-  >
+  <mat-list-option [matMenuTriggerFor]="accountSidenavMenu" *ngIf="loggedUser">
     <mat-icon mat-list-icon>account_circle</mat-icon>
     Contul meu
   </mat-list-option>
   <mat-menu #accountSidenavMenu="matMenu">
     <button mat-menu-item (click)="onCloseSidenav()" routerLink="/account">
       <mat-icon>person</mat-icon>
-      <span> {{ (loggedUser$ | async)?.username }}</span>
+      <span> {{ loggedUser?.username }}</span>
     </button>
     <button mat-menu-item (click)="onCloseSidenav()" (click)="onLogout()">
       <mat-icon>power_settings_new</mat-icon>
@@ -53,15 +50,15 @@
     </button>
   </mat-menu>
   <mat-list-option
-    *ngIf="(theme$ | async) === ThemeEnum.DARK_THEME"
-    (click)="onChangeTheme(ThemeEnum.LIGHT_THEME)"
+    *ngIf="theme === ThemeEnum.LIGHT_THEME"
+    (click)="onChangeTheme(ThemeEnum.DARK_THEME)"
   >
     <mat-icon mat-list-icon>brightness_4</mat-icon>
     Mod noapte
   </mat-list-option>
   <mat-list-option
-    *ngIf="(theme$ | async) === ThemeEnum.LIGHT_THEME"
-    (click)="onChangeTheme(ThemeEnum.DARK_THEME)"
+    *ngIf="theme === ThemeEnum.DARK_THEME"
+    (click)="onChangeTheme(ThemeEnum.LIGHT_THEME)"
   >
     <mat-icon mat-list-icon>brightness_5</mat-icon>
     Mod zi

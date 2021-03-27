@@ -1,7 +1,4 @@
-<mat-toolbar
-  class="mat-elevation-z3 mat-app-background"
-  [ngClass]="{ 'dark-theme': (theme$ | async) === ThemeEnum.DARK_THEME }"
->
+<mat-toolbar class="mat-elevation-z3">
   <div>Ace<span class="primary">of</span>Bids</div>
   <span class="ml-auto">
     <button mat-button [matMenuTriggerFor]="auctionsMenu">Licitații</button>
@@ -28,7 +25,7 @@
       mat-button
       color="primary"
       (click)="onOpenAuthDialog()"
-      *ngIf="(loggedUser$ | async) === null"
+      *ngIf="loggedUser === null"
     >
       Conectează-te
     </button>
@@ -36,14 +33,14 @@
       mat-button
       color="primary"
       [matMenuTriggerFor]="accountMenu"
-      *ngIf="loggedUser$ | async"
+      *ngIf="loggedUser"
     >
       Contul meu
     </button>
     <mat-menu #accountMenu="matMenu">
       <button mat-menu-item routerLink="/account">
         <mat-icon>person</mat-icon>
-        <span> {{ (loggedUser$ | async)?.username }}</span>
+        <span> {{ loggedUser?.username }}</span>
       </button>
       <button mat-menu-item (click)="onLogout()">
         <mat-icon>power_settings_new</mat-icon>
@@ -51,14 +48,14 @@
       </button>
     </mat-menu>
     <button
-      *ngIf="(theme$ | async) === ThemeEnum.LIGHT_THEME"
+      *ngIf="theme === ThemeEnum.LIGHT_THEME"
       mat-icon-button
       (click)="onChangeTheme(ThemeEnum.DARK_THEME)"
     >
       <mat-icon>brightness_4</mat-icon>
     </button>
     <button
-      *ngIf="(theme$ | async) === ThemeEnum.DARK_THEME"
+      *ngIf="theme === ThemeEnum.DARK_THEME"
       mat-icon-button
       (click)="onChangeTheme(ThemeEnum.LIGHT_THEME)"
     >

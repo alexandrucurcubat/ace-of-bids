@@ -2,21 +2,26 @@
   *ngIf="isLoading$ | async"
   mode="indeterminate"
 ></mat-progress-bar>
-<ace-header></ace-header>
+<ace-header
+  [theme]="theme$ | async"
+  [loggedUser]="loggedUser$ | async"
+></ace-header>
 <mat-sidenav-container
-  class="main-sidenav-container mat-app-background"
+  class="main-sidenav-container"
   (backdropClick)="onCloseSidenav()"
   (window:resize)="onResize($event)"
-  [ngClass]="{ 'dark-theme': (theme$ | async) === ThemeEnum.DARK_THEME }"
 >
   <mat-sidenav #sidenav mode="over" [fixedInViewport]="true">
-    <ace-sidenav></ace-sidenav>
+    <ace-sidenav
+      [theme]="theme$ | async"
+      [loggedUser]="loggedUser$ | async"
+    ></ace-sidenav>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
     <button id="sidenav-btn" mat-fab color="primary" (click)="onOpenSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
-    <ace-footer></ace-footer>
+    <ace-footer [currentYear]="currentYear"></ace-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

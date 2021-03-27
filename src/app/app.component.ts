@@ -2,10 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  HostBinding,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Observable, Subscription } from 'rxjs';
 import * as Hammer from 'hammerjs';
 
 import {
@@ -14,20 +17,24 @@ import {
 } from './shared/services/theming/theming.service';
 import { AuthService } from './auth/services/auth.service';
 import { LoadingService } from './shared/services/loading/loading.service';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SidenavService } from './shared/services/sidenav/sidenav.service';
+import { User } from './shared/models/user';
 
 @Component({
   selector: 'ace-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class')
+  themeCssClass!: Theme;
+  themeSubscription!: Subscription;
+  theme$!: Observable<Theme>;
+  ThemeEnum = Theme;
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
-  ThemeEnum = Theme;
-  theme$!: Observable<Theme>;
   isLoading$!: Observable<boolean>;
+  loggedUser$!: Observable<User | null>;
   currentYear = new Date().getFullYear();
 
   constructor(
@@ -35,9 +42,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     private sidenavService: SidenavService,
     private themingService: ThemingService,
     private loadingService: LoadingService,
-    elementRef: ElementRef
-  ) {
-    const hammertime = new Hammer(elementRef.nativeElement, {});
+    private elementRef: ElementRef
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.autoLogin();
+    this.loggedUser$ = this.authService.loggedUser$;
+    this.isLoading$ = this.loadingService.isLoading$;
+    this.theme$ = this.themingService.theme$;
+    this.themeSubscription = this.theme$.subscribe(
+      (theme) => (this.themeCssClass = theme)
+    );
+    const hammertime = new Hammer(this.elementRef.nativeElement, {});
     hammertime.on('panright', () => {
       if (window.innerWidth < 600) {
         this.onOpenSidenav();
@@ -46,12 +62,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     hammertime.on('panleft', () => {
       this.onCloseSidenav();
     });
-  }
-
-  ngOnInit(): void {
-    this.authService.autoLogin();
-    this.isLoading$ = this.loadingService.isLoading$;
-    this.theme$ = this.themingService.theme$;
   }
 
   ngAfterViewInit(): void {
@@ -70,5 +80,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   onCloseSidenav(): void {
     this.sidenavService.close();
+  }
+
+  ngOnDestroy(): void {
+    this.themeSubscription.unsubscribe();
   }
 }

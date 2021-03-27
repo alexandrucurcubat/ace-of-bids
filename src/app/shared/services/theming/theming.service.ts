@@ -11,31 +11,24 @@ export enum Theme {
 
 @Injectable({ providedIn: 'root' })
 export class ThemingService {
+  private themes = [Theme.LIGHT_THEME, Theme.DARK_THEME];
   private themeSubject = new BehaviorSubject(Theme.LIGHT_THEME);
   theme$ = this.themeSubject.asObservable();
 
   constructor(private overlayContainer: OverlayContainer) {
-    const localTheme = localStorage.getItem(LocalStorage.THEME) as Theme;
-    this.themeSubject.next(localTheme ? localTheme : Theme.LIGHT_THEME);
-    this.applyThemeOnOverlays(localTheme);
+    const theme = localStorage.getItem(LocalStorage.THEME);
+    this.applyTheme(theme ? (theme as Theme) : Theme.LIGHT_THEME);
   }
 
-  changeTheme(theme: Theme): void {
+  applyTheme(theme: Theme): void {
     this.themeSubject.next(theme);
-    this.applyThemeOnOverlays(theme);
-    localStorage.setItem(LocalStorage.THEME, theme);
-  }
-
-  private applyThemeOnOverlays(theme: string): void {
     const overlayContainerClasses = this.overlayContainer.getContainerElement()
       .classList;
-    const themeClassesToRemove = Array.from([
-      Theme.LIGHT_THEME,
-      Theme.DARK_THEME,
-    ]);
+    const themeClassesToRemove = Array.from(this.themes);
     if (themeClassesToRemove.length) {
       overlayContainerClasses.remove(...themeClassesToRemove);
     }
     overlayContainerClasses.add(theme);
+    localStorage.setItem(LocalStorage.THEME, theme);
   }
 }
