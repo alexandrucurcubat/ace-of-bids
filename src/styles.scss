@@ -4,35 +4,15 @@
 $light-primary: mat-palette($mat-cyan);
 $light-accent: mat-palette($mat-orange);
 $light-warn: mat-palette($mat-red);
-$light-theme: mat-light-theme(
-  (
-    color: (
-      primary: $light-primary,
-      accent: $light-accent,
-      warn: $light-warn,
-    ),
-  )
-);
+
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+@include angular-material-theme($light-theme);
 
 $dark-primary: mat-palette($mat-cyan);
 $dark-accent: mat-palette($mat-orange);
 $dark-warn: mat-palette($mat-red);
-$dark-theme: mat-dark-theme(
-  (
-    color: (
-      primary: $dark-primary,
-      accent: $dark-accent,
-      warn: $dark-warn,
-    ),
-  )
-);
 
-$mat-theme-ignore-duplication-warnings: true;
-
-.light-theme {
-  @include angular-material-theme($light-theme);
-}
-
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 .dark-theme {
   @include angular-material-theme($dark-theme);
 }

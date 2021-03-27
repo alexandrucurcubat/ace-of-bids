@@ -1,4 +1,4 @@
-export enum LOCAL_STORAGE {
+export enum LocalStorage {
   THEME = 'theme',
   JWT = 'jwt',
 }

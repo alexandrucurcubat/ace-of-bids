@@ -12,6 +12,7 @@ import { JwtInterceptor } from './core/jwt.interceptor';
 import { AuctionsModule } from './auctions/auctions.module';
 import { AuthModule } from './auth/auth.module';
 import { environment } from '../environments/environment';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { environment } from '../environments/environment';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    OverlayModule,
   ],
   bootstrap: [AppComponent],
   providers: [

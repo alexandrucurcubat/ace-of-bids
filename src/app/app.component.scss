@@ -3,18 +3,6 @@ mat-progress-bar {
   z-index: 3;
 }
 
-mat-toolbar {
-  font-weight: bold;
-  position: fixed;
-  z-index: 2;
-
-  @media screen and (max-width: 599px) {
-    button {
-      display: none;
-    }
-  }
-}
-
 mat-sidenav-container {
   mat-sidenav {
     padding-top: 55px;
@@ -37,10 +25,6 @@ mat-sidenav-container {
       @media screen and (min-width: 600px) {
         display: none;
       }
-    }
-
-    footer {
-      padding-top: 50px;
     }
   }
 }
