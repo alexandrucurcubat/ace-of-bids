@@ -26,7 +26,6 @@
       <mat-button-toggle [value]="AUCTIONS_VIEW.GRID" (click)="onSetGridView()">
         <mat-icon>view_module</mat-icon>
       </mat-button-toggle>
-
       <mat-button-toggle [value]="AUCTIONS_VIEW.LIST" (click)="onSetListView()">
         <mat-icon>view_list</mat-icon>
       </mat-button-toggle>
@@ -34,149 +33,11 @@
   </div>
 </div>
 <mat-divider></mat-divider>
-<div class="auctions-grid" *ngIf="auctionsView === AUCTIONS_VIEW.GRID">
-  <div fxLayout="row wrap" fxLayoutGap="16px grid">
-    <div
-      fxFlex="25%"
-      fxFlex.md="33%"
-      fxFlex.sm="50%"
-      fxFlex.xs="100%"
-      *ngFor="let auction of auctions$ | async"
-    >
-      <a [routerLink]="['/auctions/', auction.id]">
-        <mat-card class="example-card">
-          <mat-card-header>
-            <mat-card-title>{{ auction.title }}</mat-card-title>
-            <mat-card-subtitle *ngIf="!auction.reserve">
-              <span class="primary">Fără rezervă</span>
-            </mat-card-subtitle>
-            <mat-card-subtitle *ngIf="auction.reserve">
-              <span>Cu rezervă</span>
-            </mat-card-subtitle>
-          </mat-card-header>
-          <img
-            mat-card-image
-            [src]="auction.images[0]"
-            [alt]="auction.title"
-            height="270px"
-          />
-          <mat-card-content>
-            <div class="mb-5">{{ auction.description }}</div>
-            <div *ngIf="auction.status === AUCTIONS_STATUS.LIVE">
-              <div>
-                <span *ngIf="auction.lastBid !== 0">
-                  Ultima ofertă:
-                  <span class="fw-500">
-                    {{ auction.lastBid | currency: auction.currency }}
-                  </span>
-                </span>
-                <span class="fw-500" *ngIf="auction.lastBid === 0">
-                  Nu sunt oferte
-                </span>
-              </div>
-              <div>
-                Închide în:
-                <span
-                  [ngClass]="{
-                    warn: auction.timeBeforeClose < 10800,
-                    live: auction.timeBeforeClose >= 10800
-                  }"
-                >
-                  {{ auction.timeBeforeClose | secondsToDhms }}
-                </span>
-              </div>
-            </div>
-            <div *ngIf="auction.status === AUCTIONS_STATUS.CLOSED">
-              <div *ngIf="auction.sold">
-                S-a vândut cu
-                <span class="fw-500">
-                  {{ auction.lastBid | currency: auction.currency }}
-                </span>
-              </div>
-              <div *ngIf="!auction.sold">Nu s-a vândut</div>
-            </div>
-            <div *ngIf="auction.status !== AUCTIONS_STATUS.CLOSED"></div>
-          </mat-card-content>
-        </mat-card>
-      </a>
-    </div>
-  </div>
-</div>
-<div class="auctions-list" *ngIf="auctionsView === AUCTIONS_VIEW.LIST">
-  <div>
-    <mat-selection-list #auctionsList [multiple]="false">
-      <div *ngFor="let auction of auctions$ | async">
-        <a [routerLink]="['/auctions/', auction.id]">
-          <mat-list-option role="auction">
-            <div fxLayout>
-              <img
-                [src]="auction.images[0]"
-                [alt]="auction.title"
-                height="50px"
-                width="50px"
-              />
-              <div
-                class="auction-li w-100"
-                fxLayout="column"
-                fxLayout.gt-xs="row"
-                fxLayoutAlign="space-between"
-              >
-                <div class="mb-5">
-                  <div class="mb-5" mat-line>
-                    {{ auction.title }}
-                  </div>
-                  <div mat-line>
-                    {{ auction.description }}
-                  </div>
-                  <div mat-line class="primary" *ngIf="!auction.reserve">
-                    Fără rezervă
-                  </div>
-                  <div mat-line *ngIf="auction.reserve">Cu rezervă</div>
-                </div>
-                <div class="text-end">
-                  <div mat-line *ngIf="auction.status === AUCTIONS_STATUS.LIVE">
-                    <div mat-line class="mb-5">
-                      <span *ngIf="auction.lastBid !== 0">
-                        Ultima ofertă:
-                        <span class="fw-500">
-                          {{ auction.lastBid | currency: auction.currency }}
-                        </span>
-                      </span>
-                      <span class="fw-500" *ngIf="auction.lastBid === 0">
-                        Nu sunt oferte
-                      </span>
-                    </div>
-                    <div>
-                      Închide în:
-                      <span
-                        [ngClass]="{
-                          warn: auction.timeBeforeClose < 10800,
-                          live: auction.timeBeforeClose >= 10800
-                        }"
-                      >
-                        {{ auction.timeBeforeClose | secondsToDhms }}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    mat-line
-                    *ngIf="auction.status === AUCTIONS_STATUS.CLOSED"
-                  >
-                    <div *ngIf="auction.sold">
-                      S-a vândut cu
-                      <span class="fw-500">
-                        {{ auction.lastBid | currency: auction.currency }}
-                      </span>
-                    </div>
-                    <div *ngIf="!auction.sold">Nu s-a vândut</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-list-option>
-        </a>
-        <mat-divider></mat-divider>
-      </div>
-    </mat-selection-list>
-  </div>
-</div>
+<ace-auctions-grid
+  [auctions]="auctions$ | async"
+  *ngIf="auctionsView === AUCTIONS_VIEW.GRID"
+></ace-auctions-grid>
+<ace-auctions-list
+  [auctions]="auctions$ | async"
+  *ngIf="auctionsView === AUCTIONS_VIEW.LIST"
+></ace-auctions-list>

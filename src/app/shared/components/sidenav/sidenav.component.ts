@@ -14,11 +14,9 @@ import { Theme, ThemingService } from '../../services/theming/theming.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
+  @Input() theme!: Theme | null;
+  @Input() loggedUser!: User | null;
   ThemeEnum = Theme;
-  @Input()
-  theme!: Theme | null;
-  @Input()
-  loggedUser!: User | null;
 
   constructor(
     private sidenavService: SidenavService,

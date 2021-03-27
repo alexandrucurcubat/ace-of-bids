@@ -1,0 +1,68 @@
+<div class="auctions-grid">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      fxFlex="25%"
+      fxFlex.md="33%"
+      fxFlex.sm="50%"
+      fxFlex.xs="100%"
+      *ngFor="let auction of auctions"
+    >
+      <a [routerLink]="['/auctions/', auction.id]">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>{{ auction.title }}</mat-card-title>
+            <mat-card-subtitle *ngIf="!auction.reserve">
+              <span class="primary">Fără rezervă</span>
+            </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="auction.reserve">
+              <span>Cu rezervă</span>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img
+            mat-card-image
+            [src]="auction.images[0]"
+            [alt]="auction.title"
+            height="270px"
+          />
+          <mat-card-content>
+            <div class="mb-5">{{ auction.description }}</div>
+            <div *ngIf="auction.status === AUCTIONS_STATUS.LIVE">
+              <div>
+                <span *ngIf="auction.lastBid !== 0">
+                  Ultima ofertă:
+                  <span class="fw-500">
+                    {{ auction.lastBid | currency: auction.currency }}
+                  </span>
+                </span>
+                <span class="fw-500" *ngIf="auction.lastBid === 0">
+                  Nu sunt oferte
+                </span>
+              </div>
+              <div>
+                Închide în:
+                <span
+                  [ngClass]="{
+                    warn: auction.timeBeforeClose < 10800,
+                    live: auction.timeBeforeClose >= 10800
+                  }"
+                >
+                  {{ auction.timeBeforeClose | secondsToDhms }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="auction.status === AUCTIONS_STATUS.CLOSED">
+              <div *ngIf="auction.sold">
+                S-a vândut cu
+                <span class="fw-500">
+                  {{ auction.lastBid | currency: auction.currency }}
+                </span>
+              </div>
+              <div *ngIf="!auction.sold">Nu s-a vândut</div>
+            </div>
+            <div *ngIf="auction.status !== AUCTIONS_STATUS.CLOSED"></div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+  </div>
+</div>
