@@ -13,11 +13,9 @@ import { Theme, ThemingService } from '../../services/theming/theming.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+  @Input() theme!: Theme | null;
+  @Input() loggedUser!: User | null;
   ThemeEnum = Theme;
-  @Input()
-  theme!: Theme | null;
-  @Input()
-  loggedUser!: User | null;
 
   constructor(
     private themingService: ThemingService,

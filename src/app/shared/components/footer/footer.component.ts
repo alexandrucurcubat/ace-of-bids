@@ -7,6 +7,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
-  @Input()
-  currentYear!: number;
+  @Input() currentYear!: number;
 }

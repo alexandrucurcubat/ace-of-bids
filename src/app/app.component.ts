@@ -26,13 +26,11 @@ import { User } from './shared/models/user';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  @HostBinding('class')
-  themeCssClass!: Theme;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  @HostBinding('class') themeCssClass!: Theme;
   themeSubscription!: Subscription;
   theme$!: Observable<Theme>;
   ThemeEnum = Theme;
-  @ViewChild('sidenav')
-  sidenav!: MatSidenav;
   isLoading$!: Observable<boolean>;
   loggedUser$!: Observable<User | null>;
   currentYear = new Date().getFullYear();
