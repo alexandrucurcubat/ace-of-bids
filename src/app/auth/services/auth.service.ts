@@ -12,7 +12,7 @@ import {
   PasswordResetData,
 } from '../models/auth-form-data';
 import { User } from 'src/app/shared/models/user';
-import { LOCAL_STORAGE } from 'src/app/shared/models/local-storage';
+import { LocalStorage } from 'src/app/shared/models/local-storage';
 import { JwtResponse } from '../models/jwt-response';
 
 @Injectable({ providedIn: 'root' })
@@ -38,7 +38,7 @@ export class AuthService {
             this.setJwtTimer(expirationDate.toISOString());
           }
           this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
-          localStorage.setItem(LOCAL_STORAGE.JWT, jwt);
+          localStorage.setItem(LocalStorage.JWT, jwt);
         })
       );
   }
@@ -58,7 +58,7 @@ export class AuthService {
     this.loggedUserSubject.next(null);
     this.router.navigate(['']);
     clearTimeout(this.jwtTimer);
-    localStorage.removeItem(LOCAL_STORAGE.JWT);
+    localStorage.removeItem(LocalStorage.JWT);
   }
 
   register(registrationData: RegistrationData): Observable<User> {
@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   getJwt(): string | null {
-    return localStorage.getItem(LOCAL_STORAGE.JWT);
+    return localStorage.getItem(LocalStorage.JWT);
   }
 
   updateLoggedUser(user: User): void {

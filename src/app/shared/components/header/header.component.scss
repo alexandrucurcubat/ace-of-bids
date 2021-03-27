@@ -1,0 +1,11 @@
+mat-toolbar {
+  font-weight: bold;
+  position: fixed;
+  z-index: 2;
+
+  @media screen and (max-width: 599px) {
+    button {
+      display: none;
+    }
+  }
+}

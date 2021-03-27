@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { MaterialModule } from 'src/app/shared/ui/material/material.module';
+import { MaterialModule } from 'src/app/shared/material/material.module';
 import { AuthModule } from './auth.module';
 import { AuthComponent } from './auth.component';
 

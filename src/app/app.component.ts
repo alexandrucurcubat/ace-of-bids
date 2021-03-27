@@ -1,47 +1,40 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  HostBinding,
-  OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
-import { OverlayContainer } from '@angular/cdk/overlay';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import * as Hammer from 'hammerjs';
 
 import {
-  Themes,
+  Theme,
   ThemingService,
-} from './shared/ui/theming/services/theming.service';
-import { User } from './shared/models/user';
-import { Environment } from './shared/models/environment';
+} from './shared/services/theming/theming.service';
 import { AuthService } from './auth/services/auth.service';
 import { LoadingService } from './shared/services/loading/loading.service';
-import { AuthComponent } from './auth/auth.component';
+import { MatSidenav } from '@angular/material/sidenav';
+import { SidenavService } from './shared/services/sidenav/sidenav.service';
 
 @Component({
   selector: 'ace-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
-  @HostBinding('class')
-  themeClass: Themes = Themes.LIGHT_THEME;
-  ThemesEnum = Themes;
-  themingSubscription = new Subscription();
+export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('sidenav')
+  sidenav!: MatSidenav;
+  ThemeEnum = Theme;
+  theme$!: Observable<Theme>;
   isLoading$!: Observable<boolean>;
-  loggedUser$!: Observable<User | null>;
-  environment!: Environment;
-  sidenavIsOpened = false;
   currentYear = new Date().getFullYear();
 
   constructor(
-    private themingService: ThemingService,
-    private overlayContainer: OverlayContainer,
     private authService: AuthService,
+    private sidenavService: SidenavService,
+    private themingService: ThemingService,
     private loadingService: LoadingService,
-    private matDialog: MatDialog,
     elementRef: ElementRef
   ) {
     const hammertime = new Hammer(elementRef.nativeElement, {});
@@ -56,55 +49,26 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.themingSubscription = this.themingService.theme.subscribe(
-      (theme: Themes) => {
-        this.themeClass = theme;
-        this.applyThemeOnOverlays();
-      }
-    );
-    this.isLoading$ = this.loadingService.isLoading$;
     this.authService.autoLogin();
-    this.loggedUser$ = this.authService.loggedUser$;
-    this.environment = this.environment;
+    this.isLoading$ = this.loadingService.isLoading$;
+    this.theme$ = this.themingService.theme$;
   }
 
-  onChangeTheme(theme: Themes): void {
-    this.themingService.changeTheme(theme);
-  }
-
-  onOpenAuthDialog(): void {
-    this.matDialog.open(AuthComponent);
+  ngAfterViewInit(): void {
+    this.sidenavService.setSidenav(this.sidenav);
   }
 
   onResize(event: any): void {
     if (event.target.innerWidth >= 600) {
-      this.sidenavIsOpened = false;
+      this.sidenavService.close();
     }
   }
 
   onOpenSidenav(): void {
-    this.sidenavIsOpened = true;
+    this.sidenavService.open();
   }
 
   onCloseSidenav(): void {
-    this.sidenavIsOpened = false;
-  }
-
-  onLogout(): void {
-    this.authService.logout();
-  }
-
-  private applyThemeOnOverlays(): void {
-    const overlayContainerClasses = this.overlayContainer.getContainerElement()
-      .classList;
-    const themeClassesToRemove = Array.from(this.themingService.themes);
-    if (themeClassesToRemove.length) {
-      overlayContainerClasses.remove(...themeClassesToRemove);
-    }
-    overlayContainerClasses.add(this.themeClass);
-  }
-
-  ngOnDestroy(): void {
-    this.themingSubscription.unsubscribe();
+    this.sidenavService.close();
   }
 }

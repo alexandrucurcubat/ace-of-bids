@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { LOCAL_STORAGE } from 'src/app/shared/models/local-storage';
+import { LocalStorage } from 'src/app/shared/models/local-storage';
 import { User } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 import { PasswordData, UsernameData } from '../models/account-form-data';
@@ -25,7 +25,7 @@ export class AccountService {
         tap((user: User) => {
           this.authService.updateLoggedUser(user);
           if (user.jwt) {
-            localStorage.setItem(LOCAL_STORAGE.JWT, user.jwt);
+            localStorage.setItem(LocalStorage.JWT, user.jwt);
           }
         })
       );
