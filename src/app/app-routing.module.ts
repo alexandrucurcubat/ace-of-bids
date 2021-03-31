@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { AuctionsComponent } from './auctions/auctions.component';
+import { EmailConfirmationComponent } from './auth/email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auctions', pathMatch: 'full' },
@@ -20,6 +21,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./account/account.module').then((m) => m.AccountModule),
     canLoad: [AuthGuard],
+  },
+  {
+    path: 'email-confirmation',
+    component: EmailConfirmationComponent,
   },
   { path: '**', redirectTo: 'auctions' },
 ];

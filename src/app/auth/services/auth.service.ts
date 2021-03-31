@@ -10,6 +10,7 @@ import {
   LoginData,
   RegistrationData,
   PasswordResetData,
+  EmailConfirmationData,
 } from '../models/auth-form-data';
 import { User } from 'src/app/shared/models/user';
 import { LocalStorage } from 'src/app/shared/models/local-storage';
@@ -65,6 +66,15 @@ export class AuthService {
     return this.http.post<User>(
       `${environment.apiUrl}/auth/register`,
       registrationData
+    );
+  }
+
+  resendConfirmation(
+    emailConfirmationData: EmailConfirmationData
+  ): Observable<any> {
+    return this.http.post<any>(
+      `${environment.apiUrl}/auth/confirmation/resend`,
+      emailConfirmationData
     );
   }
 
