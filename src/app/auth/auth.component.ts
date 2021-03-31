@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
@@ -118,7 +118,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.subs.sink = this.authService
         .register(registrationData)
         .pipe(
-          switchMap(() => this.authService.login(registrationData)),
           catchError((err: HttpErrorResponse) => {
             const message = err.error.message;
             this.setErrorMessage(message);
@@ -128,7 +127,10 @@ export class AuthComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.dialogRef.close();
           this.router.navigate(['about']);
-          this.snackbar.open('Înregistrare reușită cu succes!', 'OK');
+          this.snackbar.open(
+            'Am trimis un link de confirmare pe adresa de email specificiată',
+            'OK'
+          );
         });
     }
   }

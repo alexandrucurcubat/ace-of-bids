@@ -6,9 +6,10 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 import { AuthComponent } from './auth.component';
 import { SharedModule } from '../shared/shared.module';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 @NgModule({
-  declarations: [AuthComponent],
+  declarations: [AuthComponent, EmailConfirmationComponent],
   imports: [CommonModule, HttpClientModule, ReactiveFormsModule, SharedModule],
   exports: [AuthComponent],
   providers: [

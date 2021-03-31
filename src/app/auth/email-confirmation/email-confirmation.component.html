@@ -1,0 +1,19 @@
+<form [formGroup]="confirmationForm" (ngSubmit)="onResendConfirmation()">
+  <h1>Link-ul de confirmare a expirat</h1>
+  <mat-form-field class="mb-5">
+    <mat-label>Email *</mat-label>
+    <input type="email" matInput formControlName="email" />
+    <mat-icon matSuffix>alternate_email</mat-icon>
+    <mat-error *ngIf="email?.errors?.required"> Lipsește email-ul </mat-error>
+    <mat-error *ngIf="email?.errors?.pattern">Email invalid</mat-error>
+    <mat-error *ngIf="email?.errors?.invalidCredentials">
+      Email incorect
+    </mat-error>
+    <mat-error *ngIf="email?.errors?.userConfirmed">
+      Email deja confirmat
+    </mat-error>
+  </mat-form-field>
+  <button mat-flat-button color="primary" [disabled]="isLoading$ | async">
+    Retrimite link
+  </button>
+</form>

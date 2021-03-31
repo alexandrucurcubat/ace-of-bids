@@ -12,3 +12,7 @@ export interface RegistrationData {
 export interface PasswordResetData {
   email: string;
 }
+
+export interface EmailConfirmationData {
+  email: string;
+}
