@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
 import { Auction } from '../models/auction';
 import {
   AuctionCurrency,
@@ -115,6 +116,8 @@ export class AuctionsService {
     },
   ];
 
+  constructor(private localStorageService: LocalStorageSrvice) {}
+
   simulateCloseTime(): void {
     setInterval(() => {
       this.auctions.map((auction: Auction) =>
@@ -191,12 +194,12 @@ export class AuctionsService {
 
   getAuctionsView(): AuctionsView {
     return (
-      (localStorage.getItem('auctions-view') as AuctionsView) ||
+      (this.localStorageService.getItem('auctions-view') as AuctionsView) ||
       AuctionsView.GRID
     );
   }
 
   setAuctionsView(view: AuctionsView): void {
-    localStorage.setItem('auctions-view', view);
+    this.localStorageService.setItem('auctions-view', view);
   }
 }

@@ -3,6 +3,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
 
 import { LocalStorage } from '../../models/local-storage';
+import { LocalStorageSrvice } from '../local-storage/local-storage.service';
 
 export enum Theme {
   LIGHT_THEME = 'light-theme',
@@ -15,8 +16,11 @@ export class ThemingService {
   private themeSubject = new BehaviorSubject(Theme.LIGHT_THEME);
   theme$ = this.themeSubject.asObservable();
 
-  constructor(private overlayContainer: OverlayContainer) {
-    const theme = localStorage.getItem(LocalStorage.THEME);
+  constructor(
+    private overlayContainer: OverlayContainer,
+    private localStorageService: LocalStorageSrvice
+  ) {
+    const theme = this.localStorageService.getItem(LocalStorage.THEME);
     this.applyTheme(theme ? (theme as Theme) : Theme.LIGHT_THEME);
   }
 
@@ -29,6 +33,6 @@ export class ThemingService {
       overlayContainerClasses.remove(...themeClassesToRemove);
     }
     overlayContainerClasses.add(theme);
-    localStorage.setItem(LocalStorage.THEME, theme);
+    this.localStorageService.setItem(LocalStorage.THEME, theme);
   }
 }

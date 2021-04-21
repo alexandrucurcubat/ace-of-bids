@@ -8,7 +8,6 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SubSink } from 'subsink';
@@ -26,18 +25,17 @@ export class AuthComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   FormType = AuthFormType;
   currentForm = AuthFormType.LOGIN;
-  loginForm!: FormGroup;
-  registrationForm!: FormGroup;
-  passwordResetForm!: FormGroup;
-  isLoading$!: Observable<boolean>;
+  loginForm: FormGroup;
+  registrationForm: FormGroup;
+  passwordResetForm: FormGroup;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private dialogRef: MatDialogRef<AuthComponent>,
     private snackbar: MatSnackBar,
-    private loadingService: LoadingService,
-    private router: Router
+    private loadingService: LoadingService
   ) {}
 
   get loginEmail(): AbstractControl | null {
@@ -126,9 +124,8 @@ export class AuthComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.dialogRef.close();
-          this.router.navigate(['about']);
           this.snackbar.open(
-            'Am trimis un link de confirmare pe adresa de email specificiată',
+            'Am trimis un link de confirmare pe adresa de email',
             'OK'
           );
         });

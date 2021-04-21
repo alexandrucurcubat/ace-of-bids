@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
@@ -27,6 +28,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
       enabled: environment.production,
     }),
     OverlayModule,
+    FlexLayoutServerModule,
   ],
   bootstrap: [AppComponent],
   providers: [
