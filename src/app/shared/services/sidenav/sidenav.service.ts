@@ -3,7 +3,7 @@ import { MatDrawerToggleResult, MatSidenav } from '@angular/material/sidenav';
 
 @Injectable({ providedIn: 'root' })
 export class SidenavService {
-  private sidenav!: MatSidenav;
+  private sidenav: MatSidenav;
 
   public setSidenav(sidenav: MatSidenav): void {
     this.sidenav = sidenav;

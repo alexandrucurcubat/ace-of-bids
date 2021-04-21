@@ -22,10 +22,10 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  loggedUser$!: Observable<User | null>;
-  loggedUser!: User;
-  isLoading$!: Observable<boolean>;
-  accountForm!: FormGroup;
+  loggedUser$: Observable<User | null>;
+  loggedUser: User;
+  isLoading$: Observable<boolean>;
+  accountForm: FormGroup;
   updateable = true;
 
   constructor(

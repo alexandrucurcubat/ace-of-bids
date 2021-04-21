@@ -9,6 +9,6 @@ import { AuctionStatus } from '../models/auctions.enums';
   styleUrls: ['./auctions-grid.component.scss'],
 })
 export class AuctionsGridComponent {
-  @Input() auctions!: Auction[] | null;
+  @Input() auctions: Auction[] | null;
   AUCTIONS_STATUS = AuctionStatus;
 }
