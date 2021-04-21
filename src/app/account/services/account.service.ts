@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { LocalStorage } from 'src/app/shared/models/local-storage';
 import { User } from 'src/app/shared/models/user';
 import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
-import { environment } from 'src/environments/environment';
 import { PasswordData, UsernameData } from '../models/account-form-data';
 
 @Injectable({
