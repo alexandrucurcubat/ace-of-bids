@@ -45,7 +45,7 @@
     "@nestjs/typeorm": "^7.1.5",
     "@nguniversal/express-engine": "^11.1.2",
     "bcrypt": "^5.0.1",
-    "class-transformer": "^0.4.0",
+    "class-transformer": "^0.2.3",
     "class-validator": "^0.13.1",
     "nestjs-typeorm-paginate": "^2.3.1",
     "node-pre-gyp": "^0.17.0",
