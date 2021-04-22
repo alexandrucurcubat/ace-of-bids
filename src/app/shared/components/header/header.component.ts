@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { IUser } from 'common/models/user.interface';
-import { Theme } from 'common/models/theme.enum';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { AuthComponent } from 'src/app/auth/auth.component';
-import { ThemingService } from '../../services/theming/theming.service';
+import { User } from '../../models/user';
+import { Theme, ThemingService } from '../../services/theming/theming.service';
 
 @Component({
   selector: 'ace-header',
@@ -14,8 +13,8 @@ import { ThemingService } from '../../services/theming/theming.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  @Input() theme: Theme | null;
-  @Input() loggedUser: IUser | null;
+  @Input() theme!: Theme | null;
+  @Input() loggedUser!: User | null;
   ThemeEnum = Theme;
 
   constructor(

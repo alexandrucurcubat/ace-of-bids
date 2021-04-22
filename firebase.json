@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "prod",
-      "public": "dist/ace-of-bids/browser",
+      "public": "dist/ace-of-bids",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
@@ -13,7 +13,7 @@
     },
     {
       "target": "dev",
-      "public": "dist/ace-of-bids/browser",
+      "public": "dist/ace-of-bids",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

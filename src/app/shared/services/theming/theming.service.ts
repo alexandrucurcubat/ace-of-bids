@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
 
-import { Theme } from 'common/models/theme.enum';
-import { LocalStorage } from 'common/models/local-storage.enum';
-import { LocalStorageSrvice } from '../local-storage/local-storage.service';
+import { LocalStorage } from '../../models/local-storage';
+
+export enum Theme {
+  LIGHT_THEME = 'light-theme',
+  DARK_THEME = 'dark-theme',
+}
 
 @Injectable({ providedIn: 'root' })
 export class ThemingService {
@@ -12,11 +15,8 @@ export class ThemingService {
   private themeSubject = new BehaviorSubject(Theme.LIGHT_THEME);
   theme$ = this.themeSubject.asObservable();
 
-  constructor(
-    private overlayContainer: OverlayContainer,
-    private localStorageService: LocalStorageSrvice
-  ) {
-    const theme = this.localStorageService.getItem(LocalStorage.THEME);
+  constructor(private overlayContainer: OverlayContainer) {
+    const theme = localStorage.getItem(LocalStorage.THEME);
     this.applyTheme(theme ? (theme as Theme) : Theme.LIGHT_THEME);
   }
 
@@ -29,6 +29,6 @@ export class ThemingService {
       overlayContainerClasses.remove(...themeClassesToRemove);
     }
     overlayContainerClasses.add(theme);
-    this.localStorageService.setItem(LocalStorage.THEME, theme);
+    localStorage.setItem(LocalStorage.THEME, theme);
   }
 }

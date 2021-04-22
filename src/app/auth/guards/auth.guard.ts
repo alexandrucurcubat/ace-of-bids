@@ -12,8 +12,8 @@ import {
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { IUser } from 'common/models/user.interface';
 import { AuthService } from '../services/auth.service';
+import { User } from 'src/app/shared/models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanLoad {
@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     | boolean
     | UrlTree {
     return this.authService.loggedUser$.pipe(
-      map((loggedUser: IUser | null) => !!loggedUser),
+      map((loggedUser: User | null) => !!loggedUser),
       tap((isLogged: boolean) => !isLogged && this.router.navigate(['']))
     );
   }
@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     | boolean
     | UrlTree {
     return this.authService.loggedUser$.pipe(
-      map((loggedUser: IUser | null) => !!loggedUser),
+      map((loggedUser: User | null) => !!loggedUser),
       tap((isLogged: boolean) => !isLogged && this.router.navigate(['']))
     );
   }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { AuctionStatus, IAuction } from 'common/models/auction.interface';
+import { Auction } from '../models/auction';
+import { AuctionStatus } from '../models/auctions.enums';
 
 @Component({
   selector: 'ace-auctions-grid',
@@ -8,6 +9,6 @@ import { AuctionStatus, IAuction } from 'common/models/auction.interface';
   styleUrls: ['./auctions-grid.component.scss'],
 })
 export class AuctionsGridComponent {
-  @Input() auctions: IAuction[] | null;
+  @Input() auctions!: Auction[] | null;
   AUCTIONS_STATUS = AuctionStatus;
 }

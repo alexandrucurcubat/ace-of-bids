@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { IUser } from 'common/models/user.interface';
-import { Theme } from 'common/models/theme.enum';
 import { AuthComponent } from 'src/app/auth/auth.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from '../../models/user';
 import { SidenavService } from '../../services/sidenav/sidenav.service';
-import { ThemingService } from '../../services/theming/theming.service';
+import { Theme, ThemingService } from '../../services/theming/theming.service';
 
 @Component({
   selector: 'ace-sidenav',
@@ -15,8 +14,8 @@ import { ThemingService } from '../../services/theming/theming.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent {
-  @Input() theme: Theme | null;
-  @Input() loggedUser: IUser | null;
+  @Input() theme!: Theme | null;
+  @Input() loggedUser!: User | null;
   ThemeEnum = Theme;
 
   constructor(

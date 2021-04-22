@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { EMPTY, Observable, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -19,15 +20,16 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./email-confirmation.component.scss'],
 })
 export class EmailConfirmationComponent implements OnInit {
-  confirmationForm: FormGroup;
-  isLoading$: Observable<boolean>;
-  subscription: Subscription;
+  confirmationForm!: FormGroup;
+  isLoading$!: Observable<boolean>;
+  subscription!: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private loadingService: LoadingService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router
   ) {}
 
   get email(): AbstractControl | null {
@@ -63,8 +65,9 @@ export class EmailConfirmationComponent implements OnInit {
           })
         )
         .subscribe(() => {
+          this.router.navigate(['about']);
           this.snackbar.open(
-            'Am trimis un link de confirmare pe adresa de email',
+            'Am trimis un link de confirmare pe adresa de email specificiată',
             'OK'
           );
         });
