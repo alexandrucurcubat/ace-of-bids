@@ -8,13 +8,12 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
+import { FormType } from 'common/models/form-type.enum';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { AuthFormType } from './models/auth-form-type';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -24,20 +23,19 @@ import { AuthService } from './services/auth.service';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
-  FormType = AuthFormType;
-  currentForm = AuthFormType.LOGIN;
-  loginForm!: FormGroup;
-  registrationForm!: FormGroup;
-  passwordResetForm!: FormGroup;
-  isLoading$!: Observable<boolean>;
+  FormType = FormType;
+  currentForm = FormType.LOGIN;
+  loginForm: FormGroup;
+  registrationForm: FormGroup;
+  passwordResetForm: FormGroup;
+  isLoading$: Observable<boolean>;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private dialogRef: MatDialogRef<AuthComponent>,
     private snackbar: MatSnackBar,
-    private loadingService: LoadingService,
-    private router: Router
+    private loadingService: LoadingService
   ) {}
 
   get loginEmail(): AbstractControl | null {
@@ -126,9 +124,8 @@ export class AuthComponent implements OnInit, OnDestroy {
         )
         .subscribe(() => {
           this.dialogRef.close();
-          this.router.navigate(['about']);
           this.snackbar.open(
-            'Am trimis un link de confirmare pe adresa de email specificiată',
+            'Am trimis un link de confirmare pe adresa de email',
             'OK'
           );
         });
@@ -143,21 +140,21 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onRegistrationMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.REGISTRATION;
+    this.currentForm = FormType.REGISTRATION;
     this.loginForm.reset();
     this.passwordResetForm.reset();
   }
 
   onLoginMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.LOGIN;
+    this.currentForm = FormType.LOGIN;
     this.registrationForm.reset();
     this.passwordResetForm.reset();
   }
 
   onPasswordResetMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.PASSWORD_RESET;
+    this.currentForm = FormType.PASSWORD_RESET;
     this.loginForm.reset();
     this.registrationForm.reset();
   }

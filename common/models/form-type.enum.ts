@@ -1,4 +1,4 @@
-export enum AuthFormType {
+export enum FormType {
   LOGIN,
   REGISTRATION,
   PASSWORD_RESET,

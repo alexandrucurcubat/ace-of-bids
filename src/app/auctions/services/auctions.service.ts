@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { Auction } from '../models/auction';
 import {
+  IAuction,
   AuctionCurrency,
   AuctionsFilterBy,
   AuctionStatus,
   AuctionsView,
-} from '../models/auctions.enums';
+} from 'common/models/auction.interface';
+import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuctionsService {
-  private auctions: Auction[] = [
+  private auctions: IAuction[] = [
     {
       id: 1,
       title: 'Licitația 1',
@@ -115,9 +116,11 @@ export class AuctionsService {
     },
   ];
 
+  constructor(private localStorageService: LocalStorageSrvice) {}
+
   simulateCloseTime(): void {
     setInterval(() => {
-      this.auctions.map((auction: Auction) =>
+      this.auctions.map((auction: IAuction) =>
         auction.timeBeforeClose !== 0
           ? auction.timeBeforeClose--
           : (auction.status = AuctionStatus.CLOSED)
@@ -145,37 +148,37 @@ export class AuctionsService {
     }
   }
 
-  private getLiveAuctions(): Auction[] {
+  private getLiveAuctions(): IAuction[] {
     return this.auctions.filter(
       (auction) => auction.status === AuctionStatus.LIVE
     );
   }
 
-  private getEndingSoonAuctions(): Auction[] {
+  private getEndingSoonAuctions(): IAuction[] {
     return this.sortByEndingSoon(this.auctions).filter(
       (auction) => auction.status === AuctionStatus.LIVE
     );
   }
 
-  private getNewlyListedAuctions(): Auction[] {
+  private getNewlyListedAuctions(): IAuction[] {
     return this.sortByNewlyListed(this.auctions).filter(
       (auction) => auction.status === AuctionStatus.LIVE
     );
   }
 
-  private getClosedAuctions(): Auction[] {
+  private getClosedAuctions(): IAuction[] {
     return this.sortByNewlyListed(this.auctions).filter(
       (auction) => auction.status === AuctionStatus.CLOSED
     );
   }
 
-  private getNoReserveAuctions(): Auction[] {
+  private getNoReserveAuctions(): IAuction[] {
     return this.sortByEndingSoon(this.auctions).filter(
       (auction) => auction.status === AuctionStatus.LIVE && !auction.reserve
     );
   }
 
-  private sortByEndingSoon(auctions: Auction[]): Auction[] {
+  private sortByEndingSoon(auctions: IAuction[]): IAuction[] {
     return auctions.sort((a, b) =>
       a.timeBeforeClose > b.timeBeforeClose
         ? 1
@@ -185,18 +188,18 @@ export class AuctionsService {
     );
   }
 
-  private sortByNewlyListed(auctions: Auction[]): Auction[] {
+  private sortByNewlyListed(auctions: IAuction[]): IAuction[] {
     return auctions.sort((a, b) => (a.id < b.id ? 1 : b.id < a.id ? -1 : 0));
   }
 
   getAuctionsView(): AuctionsView {
     return (
-      (localStorage.getItem('auctions-view') as AuctionsView) ||
+      (this.localStorageService.getItem('auctions-view') as AuctionsView) ||
       AuctionsView.GRID
     );
   }
 
   setAuctionsView(view: AuctionsView): void {
-    localStorage.setItem('auctions-view', view);
+    this.localStorageService.setItem('auctions-view', view);
   }
 }

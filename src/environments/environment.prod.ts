@@ -1,6 +1,6 @@
-import { Environment } from 'src/app/shared/models/environment';
+import { IEnvironment } from 'common/models/environment.interface';
 
-export const environment: Environment = {
+export const environment: IEnvironment = {
   apiUrl: 'https://ace-of-bids-wcuq7qmyrq-ew.a.run.app',
   production: true,
 };

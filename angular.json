@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ace-of-bids",
+            "outputPath": "dist/ace-of-bids/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -65,11 +65,11 @@
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             },
-            "development": {
+            "ssr": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
+                  "with": "src/environments/environment.ssr.ts"
                 }
               ],
               "optimization": true,
@@ -136,7 +136,8 @@
             "tsConfig": [
               "tsconfig.app.json",
               "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "e2e/tsconfig.json",
+              "tsconfig.server.json"
             ],
             "exclude": ["**/node_modules/**"]
           }
@@ -154,6 +155,65 @@
             "development": {
               "devServerTarget": "ace-of-bids:serve:development"
             }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ace-of-bids/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "externalDependencies": [
+              "@nestjs/microservices",
+              "@nestjs/microservices/microservices-module",
+              "@nestjs/websockets",
+              "@nestjs/websockets/socket-module",
+              "@nestjs/core",
+              "@nestjs/common",
+              "@nestjs/swagger",
+              "cache-manager",
+              "pug-filters",
+              "bcrypt",
+              "typeorm",
+              "pg"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": false
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "ace-of-bids:build",
+            "serverTarget": "ace-of-bids:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ace-of-bids:build:production",
+              "serverTarget": "ace-of-bids:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "ace-of-bids:build:production",
+            "serverTarget": "ace-of-bids:server:production",
+            "routes": ["/"]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

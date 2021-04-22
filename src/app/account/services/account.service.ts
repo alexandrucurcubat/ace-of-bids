@@ -3,37 +3,49 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { IUser } from 'common/models/user.interface';
+import { LocalStorage } from 'common/models/local-storage.enum';
+import { UpdatePasswordDto } from 'common/dto/update-password.dto';
+import { UpdateUsernameDto } from 'common/dto/update-username.dto';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { LocalStorage } from 'src/app/shared/models/local-storage';
-import { User } from 'src/app/shared/models/user';
+import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
 import { environment } from 'src/environments/environment';
-import { PasswordData, UsernameData } from '../models/account-form-data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private localStorageService: LocalStorageSrvice
+  ) {}
 
-  updateUsername(id: number, usernameData: UsernameData): Observable<User> {
+  updateUsername(
+    id: number,
+    usernameData: UpdateUsernameDto
+  ): Observable<IUser> {
     return this.http
-      .post<User>(
-        `${environment.apiUrl}/auth/update/username/${id}`,
+      .post<IUser>(
+        `${environment.apiUrl}/api/auth/update/username/${id}`,
         usernameData
       )
       .pipe(
-        tap((user: User) => {
+        tap((user: IUser) => {
           this.authService.updateLoggedUser(user);
           if (user.jwt) {
-            localStorage.setItem(LocalStorage.JWT, user.jwt);
+            this.localStorageService.setItem(LocalStorage.JWT, user.jwt);
           }
         })
       );
   }
 
-  updatePassword(id: number, passwordData: PasswordData): Observable<User> {
-    return this.http.post<User>(
-      `${environment.apiUrl}/auth/update/password/${id}`,
+  updatePassword(
+    id: number,
+    passwordData: UpdatePasswordDto
+  ): Observable<IUser> {
+    return this.http.post<IUser>(
+      `${environment.apiUrl}/api/auth/update/password/${id}`,
       passwordData
     );
   }
