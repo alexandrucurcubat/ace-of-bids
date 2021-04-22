@@ -8,6 +8,7 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api');
+  app.enableCors({ origin: process.env.ALLOW_CORS?.split(',') });
   const options = new DocumentBuilder()
     .setTitle('Ace of Bids')
     .setDescription('Ace of Bids API description')
