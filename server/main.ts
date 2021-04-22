@@ -17,7 +17,7 @@ async function bootstrap(): Promise<void> {
     .build();
   const swaggerDocument = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, swaggerDocument);
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'
