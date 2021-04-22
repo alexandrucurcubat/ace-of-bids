@@ -10,10 +10,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
+import { IUser } from 'common/models/user.interface';
+import { UpdatePasswordDto } from 'common/dto/update-password.dto';
+import { UpdateUsernameDto } from 'common/dto/update-username.dto';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { User } from 'src/app/shared/models/user';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { PasswordData, UsernameData } from './models/account-form-data';
 import { AccountService } from './services/account.service';
 
 @Component({
@@ -22,8 +23,8 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  loggedUser$: Observable<User | null>;
-  loggedUser: User;
+  loggedUser$: Observable<IUser | null>;
+  loggedUser: IUser;
   isLoading$: Observable<boolean>;
   accountForm: FormGroup;
   updateable = true;
@@ -39,7 +40,7 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading$ = this.loadingService.isLoading$;
     this.loggedUser$ = this.authService.loggedUser$.pipe(
-      tap((user: User | null) => {
+      tap((user: IUser | null) => {
         if (user) {
           this.loggedUser = user;
         }
@@ -84,7 +85,7 @@ export class AccountComponent implements OnInit {
     }
     if (this.accountForm.valid) {
       const id = this.loggedUser.id;
-      const usernameData: UsernameData = {
+      const usernameData: UpdateUsernameDto = {
         password: this.oldPassword?.value,
         username: this.username?.value,
       };
@@ -100,7 +101,7 @@ export class AccountComponent implements OnInit {
         .subscribe();
 
       if (this.newPassword && this.newPassword.value.trim() !== '') {
-        const passwordData: PasswordData = {
+        const passwordData: UpdatePasswordDto = {
           oldPassword: this.oldPassword?.value,
           newPassword: this.newPassword?.value,
         };

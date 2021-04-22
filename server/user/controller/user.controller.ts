@@ -1,12 +1,11 @@
 import { Controller, Get, HttpCode, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
+import { IUser, UserRole } from 'common/models/user.interface';
 import { UserService } from '../services/user.service';
-import { UserRole } from '../models/user-role.enum';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesGuard } from '../../auth/guards/roles.guard';
-import { IUser } from '../models/user.interface';
 
 @Controller('users')
 export class UserController {

@@ -11,22 +11,22 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-import { IUser } from '../../user/models/user.interface';
-import { UserEntity } from '../../user/models/user.entity';
-import { RegisterDto } from '../models/dto/register.dto';
-import { LoginDto } from '../models/dto/login.dto';
-import { IJwtResponse } from '../models/jwt-response.interface';
-import { UserService } from '../../user/services/user.service';
-import { UpdatePasswordDto } from '../models/dto/update-password.dto';
-import { UpdateUsernameDto } from '../models/dto/update-username.dto';
 import {
   EMAIL_EXISTS,
   INVALID_CREDENTIALS,
   USERNAME_EXISTS,
-  USER_UNCONFIRMED,
+  USER_NOT_CONFIRMED,
   USER_CONFIRMED,
-} from '../../utils/exception-constants';
-import { EmailConfirmationDto } from '../models/dto/email-confirmation.dto';
+} from 'common/constants/exceptions';
+import { UserEntity } from 'common/entities/user.entity';
+import { LoginDto } from 'common/dto/login.dto';
+import { RegisterDto } from 'common/dto/register.dto';
+import { UpdateUsernameDto } from 'common/dto/update-username.dto';
+import { UpdatePasswordDto } from 'common/dto/update-password.dto';
+import { EmailConfirmationDto } from 'common/dto/email-confirmation.dto';
+import { IUser } from 'common/models/user.interface';
+import { IJwtResponse } from 'common/models/jwt-response.interface';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable()
 export class AuthService {
@@ -91,7 +91,7 @@ export class AuthService {
       throw new HttpException(INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
     }
     if (!user.confirmed) {
-      throw new HttpException(USER_UNCONFIRMED, HttpStatus.UNAUTHORIZED);
+      throw new HttpException(USER_NOT_CONFIRMED, HttpStatus.UNAUTHORIZED);
     }
     delete user.password;
     return { jwt: await this.generateJwt(user) } as IJwtResponse;

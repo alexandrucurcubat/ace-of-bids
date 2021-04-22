@@ -12,8 +12,8 @@ import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
+import { FormType } from 'common/models/form-type.enum';
 import { LoadingService } from 'src/app/shared/services/loading/loading.service';
-import { AuthFormType } from './models/auth-form-type';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -23,8 +23,8 @@ import { AuthService } from './services/auth.service';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
-  FormType = AuthFormType;
-  currentForm = AuthFormType.LOGIN;
+  FormType = FormType;
+  currentForm = FormType.LOGIN;
   loginForm: FormGroup;
   registrationForm: FormGroup;
   passwordResetForm: FormGroup;
@@ -140,21 +140,21 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onRegistrationMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.REGISTRATION;
+    this.currentForm = FormType.REGISTRATION;
     this.loginForm.reset();
     this.passwordResetForm.reset();
   }
 
   onLoginMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.LOGIN;
+    this.currentForm = FormType.LOGIN;
     this.registrationForm.reset();
     this.passwordResetForm.reset();
   }
 
   onPasswordResetMode(event: Event): void {
     event.preventDefault();
-    this.currentForm = AuthFormType.PASSWORD_RESET;
+    this.currentForm = FormType.PASSWORD_RESET;
     this.loginForm.reset();
     this.registrationForm.reset();
   }

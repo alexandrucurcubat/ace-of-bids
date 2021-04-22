@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Auction } from '../models/auction';
-import { AuctionStatus } from '../models/auctions.enums';
+import { AuctionStatus, IAuction } from 'common/models/auction.interface';
 
 @Component({
   selector: 'ace-auctions-list',
@@ -9,6 +8,6 @@ import { AuctionStatus } from '../models/auctions.enums';
   styleUrls: ['./auctions-list.component.scss'],
 })
 export class AuctionsListComponent {
-  @Input() auctions: Auction[] | null;
+  @Input() auctions: IAuction[] | null;
   AUCTIONS_STATUS = AuctionStatus;
 }

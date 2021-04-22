@@ -1,11 +1,11 @@
-export interface User {
+export interface IUser {
   id: number;
-  email: string;
-  username: string;
+  email?: string;
+  username?: string;
   password?: string;
-  role: UserRole;
+  role?: UserRole;
   jwt?: string;
-  confirmed: string;
+  confirmed: boolean;
 }
 
 export enum UserRole {

@@ -5,20 +5,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import {
-  LoginData,
-  RegistrationData,
-  PasswordResetData,
-  EmailConfirmationData,
-} from '../models/auth-form-data';
-import { User } from 'src/app/shared/models/user';
-import { LocalStorage } from 'src/app/shared/models/local-storage';
-import { JwtResponse } from '../models/jwt-response';
+import { LoginDto } from 'common/dto/login.dto';
+import { RegisterDto } from 'common/dto/register.dto';
+import { PasswordResetDto } from 'common/dto/password-reset.dto';
+import { EmailConfirmationDto } from 'common/dto/email-confirmation.dto';
+import { IUser } from 'common/models/user.interface';
+import { LocalStorage } from 'common/models/local-storage.enum';
+import { IJwtResponse } from 'common/models/jwt-response.interface';
 import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private loggedUserSubject = new BehaviorSubject<User | null>(null);
+  private loggedUserSubject = new BehaviorSubject<IUser | null>(null);
   private jwtTimer: any;
   loggedUser$ = this.loggedUserSubject.asObservable();
 
@@ -29,18 +28,20 @@ export class AuthService {
     private localStorageService: LocalStorageSrvice
   ) {}
 
-  login(loginData: LoginData): Observable<JwtResponse> {
-    return this.http.post<JwtResponse>(`api/auth/login`, loginData).pipe(
-      tap((jwtResponse: JwtResponse) => {
-        const jwt = jwtResponse.jwt;
-        const expirationDate = this.jwtHelper.getTokenExpirationDate(jwt);
-        if (expirationDate) {
-          this.setJwtTimer(expirationDate.toISOString());
-        }
-        this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
-        this.localStorageService.setItem(LocalStorage.JWT, jwt);
-      })
-    );
+  login(loginData: LoginDto): Observable<IJwtResponse> {
+    return this.http
+      .post<IJwtResponse>(`${environment.apiUrl}/api/auth/login`, loginData)
+      .pipe(
+        tap((jwtResponse: IJwtResponse) => {
+          const jwt = jwtResponse.jwt;
+          const expirationDate = this.jwtHelper.getTokenExpirationDate(jwt);
+          if (expirationDate) {
+            this.setJwtTimer(expirationDate.toISOString());
+          }
+          this.loggedUserSubject.next(this.jwtHelper.decodeToken(jwt).user);
+          this.localStorageService.setItem(LocalStorage.JWT, jwt);
+        })
+      );
   }
 
   autoLogin(): void {
@@ -61,20 +62,23 @@ export class AuthService {
     this.localStorageService.removeItem(LocalStorage.JWT);
   }
 
-  register(registrationData: RegistrationData): Observable<User> {
-    return this.http.post<User>(`api/auth/register`, registrationData);
+  register(registrationData: RegisterDto): Observable<IUser> {
+    return this.http.post<IUser>(
+      `${environment.apiUrl}/api/auth/register`,
+      registrationData
+    );
   }
 
   resendConfirmation(
-    emailConfirmationData: EmailConfirmationData
+    emailConfirmationData: EmailConfirmationDto
   ): Observable<any> {
     return this.http.post<any>(
-      `api/auth/confirmation/resend`,
+      `${environment.apiUrl}/api/auth/confirmation/resend`,
       emailConfirmationData
     );
   }
 
-  resetPassword(passwordResetData: PasswordResetData): void {
+  resetPassword(passwordResetData: PasswordResetDto): void {
     console.log('passwordReset', passwordResetData);
   }
 
@@ -82,7 +86,7 @@ export class AuthService {
     return this.localStorageService.getItem(LocalStorage.JWT);
   }
 
-  updateLoggedUser(user: User): void {
+  updateLoggedUser(user: IUser): void {
     this.loggedUserSubject.next(user);
   }
 

@@ -2,13 +2,9 @@ import { Injectable } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
 
-import { LocalStorage } from '../../models/local-storage';
+import { Theme } from 'common/models/theme.enum';
+import { LocalStorage } from 'common/models/local-storage.enum';
 import { LocalStorageSrvice } from '../local-storage/local-storage.service';
-
-export enum Theme {
-  LIGHT_THEME = 'light-theme',
-  DARK_THEME = 'dark-theme',
-}
 
 @Injectable({ providedIn: 'root' })
 export class ThemingService {

@@ -14,14 +14,12 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Observable, Subscription } from 'rxjs';
 import Hammer from '@egjs/hammerjs';
 
-import {
-  Theme,
-  ThemingService,
-} from './shared/services/theming/theming.service';
+import { Theme } from 'common/models/theme.enum';
+import { IUser } from 'common/models/user.interface';
 import { AuthService } from './auth/services/auth.service';
+import { ThemingService } from './shared/services/theming/theming.service';
 import { LoadingService } from './shared/services/loading/loading.service';
 import { SidenavService } from './shared/services/sidenav/sidenav.service';
-import { User } from './shared/models/user';
 import { WindowRefService } from './shared/services/window-ref/window-ref.service';
 
 @Component({
@@ -36,7 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   theme$: Observable<Theme>;
   ThemeEnum = Theme;
   isLoading$: Observable<boolean>;
-  loggedUser$: Observable<User | null>;
+  loggedUser$: Observable<IUser | null>;
   currentYear = new Date().getFullYear();
 
   constructor(

@@ -10,16 +10,16 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
+import { LoginDto } from 'common/dto/login.dto';
+import { RegisterDto } from 'common/dto/register.dto';
+import { UpdateUsernameDto } from 'common/dto/update-username.dto';
+import { UpdatePasswordDto } from 'common/dto/update-password.dto';
+import { EmailConfirmationDto } from 'common/dto/email-confirmation.dto';
+import { IUser } from 'common/models/user.interface';
+import { IJwtResponse } from 'common/models/jwt-response.interface';
 import { AuthService } from '../services/auth.service';
-import { RegisterDto } from '../models/dto/register.dto';
-import { LoginDto } from '../models/dto/login.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { ParamGuard } from '../guards/param.guard';
-import { UpdateUsernameDto } from '../models/dto/update-username.dto';
-import { UpdatePasswordDto } from '../models/dto/update-password.dto';
-import { EmailConfirmationDto } from '../models/dto/email-confirmation.dto';
-import { IUser } from 'server/user/models/user.interface';
-import { IJwtResponse } from '../models/jwt-response.interface';
 
 @Controller('auth')
 export class AuthController {

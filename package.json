@@ -1,6 +1,6 @@
 {
   "name": "ace-of-bids",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -12,7 +12,7 @@
     "e2e": "ng e2e",
     "dev:ssr": "ng run ace-of-bids:serve-ssr",
     "serve:ssr": "node dist/ace-of-bids/server/main.js",
-    "build:ssr": "ng build --prod && ng run ace-of-bids:server:production",
+    "build:ssr": "ng build --configuration=ssr && ng run ace-of-bids:server:production",
     "prerender": "ng run ace-of-bids:prerender",
     "prebuild:ssr": "ngcc"
   },

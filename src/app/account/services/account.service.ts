@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+import { IUser } from 'common/models/user.interface';
+import { LocalStorage } from 'common/models/local-storage.enum';
+import { UpdatePasswordDto } from 'common/dto/update-password.dto';
+import { UpdateUsernameDto } from 'common/dto/update-username.dto';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { LocalStorage } from 'src/app/shared/models/local-storage';
-import { User } from 'src/app/shared/models/user';
 import { LocalStorageSrvice } from 'src/app/shared/services/local-storage/local-storage.service';
-import { PasswordData, UsernameData } from '../models/account-form-data';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,11 +21,17 @@ export class AccountService {
     private localStorageService: LocalStorageSrvice
   ) {}
 
-  updateUsername(id: number, usernameData: UsernameData): Observable<User> {
+  updateUsername(
+    id: number,
+    usernameData: UpdateUsernameDto
+  ): Observable<IUser> {
     return this.http
-      .post<User>(`api/auth/update/username/${id}`, usernameData)
+      .post<IUser>(
+        `${environment.apiUrl}/api/auth/update/username/${id}`,
+        usernameData
+      )
       .pipe(
-        tap((user: User) => {
+        tap((user: IUser) => {
           this.authService.updateLoggedUser(user);
           if (user.jwt) {
             this.localStorageService.setItem(LocalStorage.JWT, user.jwt);
@@ -32,7 +40,13 @@ export class AccountService {
       );
   }
 
-  updatePassword(id: number, passwordData: PasswordData): Observable<User> {
-    return this.http.post<User>(`api/auth/update/password/${id}`, passwordData);
+  updatePassword(
+    id: number,
+    passwordData: UpdatePasswordDto
+  ): Observable<IUser> {
+    return this.http.post<IUser>(
+      `${environment.apiUrl}/api/auth/update/password/${id}`,
+      passwordData
+    );
   }
 }

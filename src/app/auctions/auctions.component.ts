@@ -4,11 +4,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import {
-  AuctionsView,
+  IAuction,
   AuctionsFilterBy,
   AuctionStatus,
-} from './models/auctions.enums';
-import { Auction } from './models/auction';
+  AuctionsView,
+} from 'common/models/auction.interface';
 import { AuctionsService } from './services/auctions.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class AuctionsComponent implements OnInit {
   AUCTIONS_STATUS = AuctionStatus;
   auctionsView: AuctionsView;
   auctionsStatus: AuctionStatus;
-  auctions$: Observable<Auction[]>;
+  auctions$: Observable<IAuction[]>;
 
   constructor(
     private auctionsService: AuctionsService,
